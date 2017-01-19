@@ -1,0 +1,39 @@
+{
+  "name": "birch-standards-picker-wrapper",
+  "version": "1.0.7",
+  "authors": [
+    "Anonymous <anonymous@example.com>"
+  ],
+  "description": "An element providing a solution to no problem in particular.",
+  "keywords": [
+    "web-component",
+    "polymer",
+    "seed"
+  ],
+  "main": "birch-standards-picker-wrapper.html",
+  "license": "http://polymer.github.io/LICENSE.txt",
+  "homepage": "https://github.com/<USERNAME>/seed-element/",
+  "ignore": [
+    "/.*",
+    "/test/"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.2.0",
+    "cedar-alert": "FamilySearchElements/cedar-alert#0.2.0",
+    "birch-standards-picker": "FamilySearchElements/birch-standards-picker#0.1.6",
+    "wc-i18n": "jshcrowthe/wc-i18n#^1.x",
+    "fs-behavior": "jshcrowthe/fs-behavior",
+    "fs-styles": "fs-webdev/fs-styles#2.x",
+    "fs-button": "jshcrowthe/fs-button"
+  },
+  "devDependencies": {
+    "fetch-mock": "https://unpkg.com/fetch-mock@5.5.0/es5/client-browserified.js",
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "qa-shared-mock-json": "https://github.com/fs-eng/qa-shared-mock-json.git",
+    "web-component-tester": "^4.0.0"
+  },
+  "resolutions": {
+    "fs-styles": "2.x",
+    "polymer": "^1.2.0"
+  }
+}

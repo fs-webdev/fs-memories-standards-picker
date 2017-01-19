@@ -1,0 +1,18 @@
+{
+  "add": "Add",
+  "add_event_data": "Add Event Data",
+  "add_event_place": "Add Event Place",
+  "add_event_date": "Add Event Date",
+  "cancel": "Cancel",
+  "confirm_delete_date_title": "Delete Event Date?",
+  "confirm_delete_place_title": "Delete Event Place?",
+  "confirm_delete_date_text": "Are you sure you want to delete this event date?",
+  "confirm_delete_place_text": "Are you sure you want to delete this event place?",
+  "delete": "Delete",
+  "edit": "Edit",
+  "event_date": "Event Date",
+  "event_place": "Event Place",
+  "save": "Save",
+  "unable_to_save_date": "Unable to Save Event Date. Please try again later.",
+  "unable_to_save_place": "Unable to Save Event Place. Please try again later."
+}
