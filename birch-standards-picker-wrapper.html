@@ -32,6 +32,8 @@ Example:
   <template>
     <wc-i18n-src locale='[[_lang]]' locale-dir='[[localeDir()]]' domain='birch-standards-picker-wrapper'></wc-i18n-src>
     <wc-i18n key='birch-standards-picker-wrapper.add' provider value='{{_i18nAdd}}'></wc-i18n>
+    <wc-i18n key='birch-standards-picker-wrapper.edit' provider value='{{_i18nEdit}}'></wc-i18n>
+    <wc-i18n key='birch-standards-picker-wrapper.delete' provider value='{{_i18nDelete}}'></wc-i18n>
     <wc-i18n key='birch-standards-picker-wrapper.event_place' provider value='{{_i18nEventPlace}}'></wc-i18n>
     <wc-i18n key='birch-standards-picker-wrapper.event_date' provider value='{{_i18nEventDate}}'></wc-i18n>
     <wc-i18n key='birch-standards-picker-wrapper.add_event_place' provider value='{{_i18nAddEventPlace}}'></wc-i18n>
@@ -42,12 +44,28 @@ Example:
     <template is="dom-if" if="[[_same(mode, 'view')]]">
       <div id="view">
         <div class="top">
+
           <template is="dom-if" if="[[_same(standardType, 'date')]]">
             <span>[[_i18nEventDate]]</span>
           </template>
+
           <template is="dom-if" if="[[_same(standardType, 'place')]]">
             <span>[[_i18nEventPlace]]</span>
           </template>
+
+          <button
+            is="fs-button"
+            on-tap="_editMode"
+            option="minor">
+            [[_i18nEdit]]
+          </button>
+
+          <button
+            is="fs-button"
+            on-tap="_addMode"
+            option="minor">
+            [[_i18nDelete]]
+          </button>
         </div>
         <div class="main">
 
