@@ -36,34 +36,32 @@ Example:
       <div id="view">
         <div class="top">
 
-          <template is="dom-if" if="[[_same(standardType, 'date')]]">
-            <span>[[i18n('event_date')]]</span>
-          </template>
-
-          <template is="dom-if" if="[[_same(standardType, 'place')]]">
-            <span>[[i18n('event_place')]]</span>
-          </template>
+          <small class="flex-item vertical-center">[[_getStandardTypeText(i18n, standardType)]]</small>
 
           <template is="dom-if" if="[[_hasText(data)]]">
             <button
               is="fs-button"
               on-tap="_editMode"
-              option="minor">
+              option="minor"
+              class="flex-item edit-delete-button">
               [[i18n('edit')]]
             </button>
+
+            <small class="flex-item vertical-center">|</small>
 
             <button
               is="fs-button"
               on-tap=""
-              option="minor">
+              option="minor"
+              class="flex-item edit-delete-button">
               [[i18n('delete')]]
             </button>
           </template>
         </div>
-        <div class="main">
 
+        <div class="main vertical-center">
           <template is="dom-if" if="[[_hasText(data)]]">
-            [[_getText(data)]]
+            <p>[[_getText(data)]]</p>
           </template>
 
           <template is="dom-if" if="[[!_hasText(data)]]">
@@ -74,7 +72,6 @@ Example:
               [[i18n('add')]]
             </button>
           </template>
-
         </div>
       </div>
     </template>
@@ -97,21 +94,23 @@ Example:
         on-birch-typeahead:selected="_handleSelection">
       </birch-standards-picker/>
 
-      <button id="save-button"
-        is="fs-button"
-        on-tap="_handleSave"
-        option="recommended"
-        loading="[[loading]]"
-        disabled$="[[_disableSaveButton]]">
-        [[i18n('save')]]
-      </button>
+      <div class="save-cancel-buttons">
+        <button id="save-button"
+          is="fs-button"
+          on-tap="_handleSave"
+          option="recommended"
+          loading="[[loading]]"
+          disabled$="[[_disableSaveButton]]">
+          [[i18n('save')]]
+        </button>
 
-      <button id="cancel-button"
-        is="fs-button"
-        on-tap="_viewMode"
-        option="minor">
-        [[i18n('cancel')]]
-      </button>
+        <button id="cancel-button"
+          is="fs-button"
+          on-tap="_viewMode"
+          option="minor">
+          [[i18n('cancel')]]
+        </button>
+      </div>
     </template>
   </template>
 
@@ -181,6 +180,10 @@ Example:
         // this._disableSaveButton = false;
       },
 
+      _updateData: function(data) {
+        this.data = Object.assign({}, data);
+      },
+
       _handleDataChange: function(data) {
         if(this.mode === 'view' || Object.keys(data).length === 0){
           this._disableSaveButton = true;
@@ -196,6 +199,7 @@ Example:
       },
 
       _editMode: function() {
+        this._updateData(this.data);
         this.mode = 'edit';
       },
 
@@ -235,6 +239,10 @@ Example:
         //   standardText: this.standardText,
         //   standardId: this.standardId
         // });
+      },
+
+      _getStandardTypeText: function(i18n, standardType) {
+        return standardType === 'date' ? i18n('event_date') : i18n('event_place');
       },
 
       _same: function(a, b, c) {
