@@ -44,19 +44,21 @@ Example:
             <span>[[i18n('event_place')]]</span>
           </template>
 
-          <button
-            is="fs-button"
-            on-tap="_editMode"
-            option="minor">
-            [[i18n('edit')]]
-          </button>
+          <template is="dom-if" if="[[_hasText(data)]]">
+            <button
+              is="fs-button"
+              on-tap="_editMode"
+              option="minor">
+              [[i18n('edit')]]
+            </button>
 
-          <button
-            is="fs-button"
-            on-tap=""
-            option="minor">
-            [[i18n('delete')]]
-          </button>
+            <button
+              is="fs-button"
+              on-tap=""
+              option="minor">
+              [[i18n('delete')]]
+            </button>
+          </template>
         </div>
         <div class="main">
 
@@ -67,7 +69,7 @@ Example:
           <template is="dom-if" if="[[!_hasText(data)]]">
             <button
               is="fs-button"
-              on-tap="_addMode"
+              on-tap="_editMode"
               option="minor">
               [[i18n('add')]]
             </button>
@@ -77,7 +79,7 @@ Example:
       </div>
     </template>
 
-    <template is="dom-if" if="[[_same(mode, 'add', 'edit')]]">
+    <template is="dom-if" if="[[_same(mode, 'edit')]]">
       <cedar-alert id="alert" alert-type="error" hidden>
         <template is="dom-if" if="[[_same(standardType, 'date')]]">
           [[i18n('unable_to_save_date')]]
@@ -130,7 +132,7 @@ Example:
 
         data: {
           type: Object,
-          return: function(){ return {}; }
+          value: function(){ return {}; }
         },
 
         standardType: {
@@ -154,12 +156,19 @@ Example:
       },
 
       reset: function() {
-        this.$$('#picker').reset();
-        this.$$('#picker').data = this.data;
-        this.$$('#alert').hide();
+        var picker = this.$$('#picker');
+        var alert = this.$$('#alert');
+        if(picker){
+          picker.reset();
+          picker.data = this.data;
+        }
+        if(alert){
+          alert.hide();
+        }
         // this.$$('#picker')._searchTerm = '';
         // this.$$('#picker').$.typeahead.loading = false;
         this._disableSaveButton = true;
+        // this.data = {};
         // this.$$('#picker').hideStandardsDropdown = true;
         // this.async(function(){
         //   this.$$('#picker').$.typeahead.$.input.focus();
@@ -173,18 +182,17 @@ Example:
       },
 
       _handleDataChange: function(data) {
-        if(Object.keys(data).length === 0) return this._disableSaveButton = true;
-        this._disableSaveButton = false;
+        if(this.mode === 'view' || Object.keys(data).length === 0){
+          this._disableSaveButton = true;
+        } else {
+          this._disableSaveButton = false;
+        }
       },
 
       _viewMode: function() {
         this.reset();
         // this._disableSaveButton = true;
         this.mode = 'view';
-      },
-
-      _addMode: function() {
-        this.mode = 'add';
       },
 
       _editMode: function() {
@@ -219,11 +227,14 @@ Example:
 
       _handleSave: function(e) {
         if(this._disableSaveButton) return;
-        this.fire('birch-standards-picker-wrapper:save', {
-          customText: this.customText,
-          standardText: this.standardText,
-          standardId: this.standardId
-        });
+        this.data = this.$$('#picker').data;
+        this._disableSaveButton = true;
+        this.mode = 'view';
+        // this.fire('birch-standards-picker-wrapper:save', {
+        //   customText: this.customText,
+        //   standardText: this.standardText,
+        //   standardId: this.standardId
+        // });
       },
 
       _same: function(a, b, c) {

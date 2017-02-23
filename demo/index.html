@@ -85,6 +85,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       document.querySelector('#reset').addEventListener('click', function() {
         var el = document.querySelector('birch-standards-picker-wrapper');
         el.reset();
+        el.data = {};
       });
 
       document.querySelector('#setup').addEventListener('click', function() {
