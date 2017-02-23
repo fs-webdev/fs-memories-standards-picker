@@ -14,6 +14,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../wc-i18n/wc-i18n.html">
 <link rel="import" href="../fs-styles/fs-styles.html">
 <link rel="import" href="../fs-button/fs-button.html">
+<link rel="import" href="../oak-i18n-behavior/oak-i18n-behavior.html">
 
 <!--
 An element providing a solution to no problem in particular.
@@ -30,55 +31,45 @@ Example:
   <style include='fs-styles'></style>
   <link rel="import" type="css" href="birch-standards-picker-wrapper.css">
   <template>
-    <wc-i18n-src locale='[[_lang]]' locale-dir='[[localeDir()]]' domain='birch-standards-picker-wrapper'></wc-i18n-src>
-    <wc-i18n key='birch-standards-picker-wrapper.add' provider value='{{_i18nAdd}}'></wc-i18n>
-    <wc-i18n key='birch-standards-picker-wrapper.edit' provider value='{{_i18nEdit}}'></wc-i18n>
-    <wc-i18n key='birch-standards-picker-wrapper.delete' provider value='{{_i18nDelete}}'></wc-i18n>
-    <wc-i18n key='birch-standards-picker-wrapper.event_place' provider value='{{_i18nEventPlace}}'></wc-i18n>
-    <wc-i18n key='birch-standards-picker-wrapper.event_date' provider value='{{_i18nEventDate}}'></wc-i18n>
-    <wc-i18n key='birch-standards-picker-wrapper.add_event_place' provider value='{{_i18nAddEventPlace}}'></wc-i18n>
-    <wc-i18n key='birch-standards-picker-wrapper.add_event_date' provider value='{{_i18nAddEventDate}}'></wc-i18n>
-    <wc-i18n key='birch-standards-picker-wrapper.unable_to_save_date' provider value='{{_i18nSaveDateError}}'></wc-i18n>
-    <wc-i18n key='birch-standards-picker-wrapper.unable_to_save_place' provider value='{{i18nSavePlaceError}}'></wc-i18n>
 
     <template is="dom-if" if="[[_same(mode, 'view')]]">
       <div id="view">
         <div class="top">
 
           <template is="dom-if" if="[[_same(standardType, 'date')]]">
-            <span>[[_i18nEventDate]]</span>
+            <span>[[i18n('event_date')]]</span>
           </template>
 
           <template is="dom-if" if="[[_same(standardType, 'place')]]">
-            <span>[[_i18nEventPlace]]</span>
+            <span>[[i18n('event_place')]]</span>
           </template>
 
           <button
             is="fs-button"
             on-tap="_editMode"
             option="minor">
-            [[_i18nEdit]]
+            [[i18n('edit')]]
           </button>
 
           <button
             is="fs-button"
-            on-tap="_addMode"
+            on-tap=""
             option="minor">
-            [[_i18nDelete]]
+            [[i18n('delete')]]
           </button>
         </div>
         <div class="main">
 
-          <template is="dom-if" if="[[_hasText(originalText, standardText)]]">
-            [[_getText(originalText, standardText)]]
+          <template is="dom-if" if="[[_hasText(data)]]">
+            [[_getText(data)]]
           </template>
 
-          <template is="dom-if" if="[[!_hasText(originalText, standardText)]]">
+          <template is="dom-if" if="[[!_hasText(data)]]">
             <button
               is="fs-button"
               on-tap="_addMode"
               option="minor">
-              [[_i18nAdd]]
+              [[i18n('add')]]
             </button>
           </template>
 
@@ -89,37 +80,35 @@ Example:
     <template is="dom-if" if="[[_same(mode, 'add', 'edit')]]">
       <cedar-alert id="alert" alert-type="error" hidden>
         <template is="dom-if" if="[[_same(standardType, 'date')]]">
-          [[_i18nSaveDateError]]
+          [[i18n('unable_to_save_date')]]
         </template>
         <template is="dom-if" if="[[_same(standardType, 'place')]]">
-          [[i18nSavePlaceError]]
+          [[i18n('unable_to_save_place')]]
         </template>
       </cedar-alert>
 
       <birch-standards-picker id="picker"
-        hide-standards-dropdown
+        data="[[data]]"
+        search-term="[[_getText(data)]]"
         standard-type="[[standardType]]"
-        original-text="[[originalText]]"
-        standard-text="[[standardText]]"
-        standard-id="[[standardId]]"
         on-birch-typeahead:input="_handleInput"
-        on-birch-typeahead:selected="_handleSelection"
-        ></birch-standards-picker/>
+        on-birch-typeahead:selected="_handleSelection">
+      </birch-standards-picker/>
 
       <button id="save-button"
         is="fs-button"
         on-tap="_handleSave"
         option="recommended"
-        loading="[[_loading]]"
+        loading="[[loading]]"
         disabled$="[[_disableSaveButton]]">
-        <wc-i18n key='birch-standards-picker-wrapper.save'></wc-i18n>
+        [[i18n('save')]]
       </button>
 
       <button id="cancel-button"
         is="fs-button"
         on-tap="_viewMode"
         option="minor">
-        <wc-i18n key='birch-standards-picker-wrapper.cancel'></wc-i18n>
+        [[i18n('cancel')]]
       </button>
     </template>
   </template>
@@ -129,7 +118,8 @@ Example:
       is: 'birch-standards-picker-wrapper',
 
       behaviors: [
-        WCI18nBehavior
+        OakI18nBehavior,
+        WCI18n()
       ],
 
       properties: {
@@ -138,27 +128,17 @@ Example:
           value: 'view'
         },
 
-        originalText: {
-          type: String,
-          value: ''
-        },
-
-        standardText: {
-          type: String,
-          value: ''
-        },
-
-        standardId: {
-          type: String,
-          value: ''
+        data: {
+          type: Object,
+          return: function(){ return {}; }
         },
 
         standardType: {
           type: String,
-          value: ''
+          value: 'date'
         },
 
-        _loading: {
+        loading: {
           type: Boolean,
           value: false
         },
@@ -169,26 +149,37 @@ Example:
         }
       },
 
+      listeners: {
+        'birch-standards-picker:update-data': '_handleDataChange'
+      },
+
       reset: function() {
+        this.$$('#picker').reset();
+        this.$$('#picker').data = this.data;
         this.$$('#alert').hide();
-        this.$$('#picker')._handleChange({
-          detail: {value: ''}
-        });
-        this.$$('#picker').$.typeahead.loading = false;
+        // this.$$('#picker')._searchTerm = '';
+        // this.$$('#picker').$.typeahead.loading = false;
         this._disableSaveButton = true;
-        this.$$('#picker').hideStandardsDropdown = true;
-        this.async(function(){
-          this.$$('#picker').$.typeahead.$.input.focus();
-        }, 100);
+        // this.$$('#picker').hideStandardsDropdown = true;
+        // this.async(function(){
+        //   this.$$('#picker').$.typeahead.$.input.focus();
+        // }, 100);
       },
 
       showErrorAlert: function() {
         this.$$('#alert').show();
-        this._loading = false;
+        this.loading = false;
+        // this._disableSaveButton = false;
+      },
+
+      _handleDataChange: function(data) {
+        if(Object.keys(data).length === 0) return this._disableSaveButton = true;
         this._disableSaveButton = false;
       },
 
       _viewMode: function() {
+        this.reset();
+        // this._disableSaveButton = true;
         this.mode = 'view';
       },
 
@@ -204,12 +195,12 @@ Example:
         return standardType === 'date' ? this._i18nEventDate : this._i18nEventPlace;
       },
 
-      _hasText: function(originalText, standardText) {
-        return !!(originalText || standardText);
+      _hasText: function(data) {
+        return !!(data.customText || data.standardText);
       },
 
-      _getText: function(originalText, standardText) {
-        return originalText || standardText;
+      _getText: function(data) {
+        return data.customText || data.standardText;
       },
 
       _handleSelection: function(e) {
@@ -219,17 +210,17 @@ Example:
       },
 
       _handleInput: function(e) {
-        if(!e || !e.detail || !e.detail.value) {
-          this.$$('#picker').$.typeahead.loading = false;
-          this.$$('#picker').hideStandardsDropdown = true;
-        }
+        // if(!e || !e.detail || !e.detail.value) {
+        //   this.$$('#picker').$.typeahead.loading = false;
+        //   this.$$('#picker').hideStandardsDropdown = true;
+        // }
         this._disableSaveButton = true;
       },
 
       _handleSave: function(e) {
         if(this._disableSaveButton) return;
         this.fire('birch-standards-picker-wrapper:save', {
-          originalText: this.originalText,
+          customText: this.customText,
           standardText: this.standardText,
           standardId: this.standardId
         });
