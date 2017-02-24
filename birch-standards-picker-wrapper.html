@@ -94,7 +94,7 @@ Example:
         on-birch-typeahead:selected="_handleSelection">
       </birch-standards-picker/>
 
-      <div class="save-cancel-buttons">
+      <div class="save-cancel-buttons vertical-center">
         <button id="save-button"
           is="fs-button"
           on-tap="_handleSave"
@@ -151,7 +151,8 @@ Example:
       },
 
       listeners: {
-        'birch-standards-picker:update-data': '_handleDataChange'
+        'birch-standards-picker:update-data': '_handleDataChange',
+        'birch-standards-picker:error': '_handleError'
       },
 
       reset: function() {
@@ -160,24 +161,17 @@ Example:
         if(picker){
           picker.reset();
           picker.data = this.data;
+          picker.$.typeahead.$.input.focus();
         }
         if(alert){
           alert.hide();
         }
-        // this.$$('#picker')._searchTerm = '';
-        // this.$$('#picker').$.typeahead.loading = false;
         this._disableSaveButton = true;
-        // this.data = {};
-        // this.$$('#picker').hideStandardsDropdown = true;
-        // this.async(function(){
-        //   this.$$('#picker').$.typeahead.$.input.focus();
-        // }, 100);
       },
 
       showErrorAlert: function() {
         this.$$('#alert').show();
         this.loading = false;
-        // this._disableSaveButton = false;
       },
 
       _updateData: function(data) {
@@ -192,9 +186,12 @@ Example:
         }
       },
 
+      _handleError: function(e) {
+        this.$$('#alert').show();
+      },
+
       _viewMode: function() {
         this.reset();
-        // this._disableSaveButton = true;
         this.mode = 'view';
       },
 
@@ -222,23 +219,19 @@ Example:
       },
 
       _handleInput: function(e) {
-        // if(!e || !e.detail || !e.detail.value) {
-        //   this.$$('#picker').$.typeahead.loading = false;
-        //   this.$$('#picker').hideStandardsDropdown = true;
-        // }
         this._disableSaveButton = true;
       },
 
       _handleSave: function(e) {
         if(this._disableSaveButton) return;
         this.data = this.$$('#picker').data;
+        this.fire('birch-standards-picker-wrapper:save', this.data);
         this._disableSaveButton = true;
         this.mode = 'view';
-        // this.fire('birch-standards-picker-wrapper:save', {
-        //   customText: this.customText,
-        //   standardText: this.standardText,
-        //   standardId: this.standardId
-        // });
+      },
+
+      _handleDelete: function(e) {
+        this.fire('birch-standards-picker-wrapper:delete', this.data);
       },
 
       _getStandardTypeText: function(i18n, standardType) {
