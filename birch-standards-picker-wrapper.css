@@ -29,6 +29,13 @@ birch-standards-picker {
 button {
   font-size: 14px !important;
 }
+.add-button {
+  padding: 0px 0 0 3px;
+}
+.add-button-text {
+  position: relative;
+  top: -3px;
+}
 .edit-delete-button {
   font-size: 12px !important;
   padding: 8.5px 5px;
