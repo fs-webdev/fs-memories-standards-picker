@@ -346,7 +346,7 @@ Example:
         this._disableSaveButton = true;
         this.mode = 'view';
 
-        this.fire('birch-standards-picker-wrapper:delete', this.artifactId);
+        this.fire('birch-standards-picker-wrapper:delete', {artifactId: this.artifactId});
       },
 
       _getDataWithArtifactId: function(){
