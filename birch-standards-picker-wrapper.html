@@ -14,6 +14,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../wc-i18n/wc-i18n.html">
 <link rel="import" href="../fs-styles/fs-styles.html">
 <link rel="import" href="../fs-button/fs-button.html">
+<link rel="import" href="../iron-ajax/iron-ajax.html">
+<link rel="import" href="../oak-ajax-behavior/oak-ajax-behavior.html">
 <link rel="import" href="../oak-i18n-behavior/oak-i18n-behavior.html">
 
 <!--
@@ -31,6 +33,14 @@ Example:
   <style include='fs-styles'></style>
   <link rel="import" type="css" href="birch-standards-picker-wrapper.css">
   <template>
+
+    <iron-ajax id="req"
+      url="[[_base]]/artifactmanager/artifacts/[[artifactId]]/datesplaces/DEFAULT/[[standardType]]"
+      method="[[_ajaxMethod]]"
+      headers="[[_headers]]"
+      on-response="_handleSuccess"
+      on-error="_handleError">
+    </iron-ajax>
 
     <template is="dom-if" if="[[_same(mode, 'view')]]">
       <div id="view">
@@ -124,6 +134,11 @@ Example:
       ],
 
       properties: {
+        artifactId: {
+          type: String,
+          value: ''
+        },
+
         mode: {
           type: String,
           value: 'view'
@@ -142,6 +157,11 @@ Example:
         loading: {
           type: Boolean,
           value: false
+        },
+
+        _ajaxMethod: {
+          type: String,
+          value: ''
         },
 
         _disableSaveButton: {
@@ -223,15 +243,82 @@ Example:
       },
 
       _handleSave: function(e) {
-        if(this._disableSaveButton) return;
+        if(!this.artifactId || this._disableSaveButton) return;
+        var picker = this.$$('#picker');
+
+        this._disableSaveButton = true;
+        this.loading = true;
+        picker.$.typeahead.$.input.disabled = true;
+
+        var data = picker.data;
+        var body = this.$.req.body = {};
+
+        if(this.standardType === 'date') {
+          body.dateNormalizedText = data.standardText || null;
+          body.dateNonStandardizedText = data.customText;
+        } else if(this.standardType === 'place') {
+          body.placeRepId = data.id;
+          body.placeNormalizedText = data.standardText;
+          body.placeNonStandardizedText = data.customText;
+        }
+
+        this._ajaxMethod = 'PUT';
+        this.$.req.generateRequest();
+      },
+
+      _handleSuccess: function(e) {
+        this.loading = false;
+        this.$$('#picker').$.typeahead.$.input.disabled = true;
+        this._disableSaveButton = true;
+        if(this._ajaxMethod === 'PUT'){
+          this._handleSaveSuccess(e)
+        } else {
+          this._handleSaveError(e);
+        }
+      },
+
+      _handleError: function(e) {
+        this.loading = false;
+        this.$$('#picker').$.typeahead.$.input.disabled = true;
+        this.$$('#alert').show();
+      },
+
+      _handleSaveSuccess: function(e) {
+        this.loading = false;
+
+        // if(!e || !e.detail || !e.detail.response) return;
+        // var res = e.detail.response;
+
         this.data = this.$$('#picker').data;
-        this.fire('birch-standards-picker-wrapper:save', this.data);
         this._disableSaveButton = true;
         this.mode = 'view';
+
+        this.fire('birch-standards-picker-wrapper:saved', this._getDataWithArtifactId());
       },
 
       _handleDelete: function(e) {
-        this.fire('birch-standards-picker-wrapper:delete', this.data);
+        if(!this.artifactId || this._disableSaveButton) return;
+
+        this._ajaxMethod = 'DELETE';
+        this.$.req.body = {};
+        this.$.req.generateRequest();
+      },
+
+      _handleDeleteSuccess: function(e) {
+        this.loading = false;
+
+        this.data = {};
+        this._disableSaveButton = true;
+        this.mode = 'view';
+
+        this.fire('birch-standards-picker-wrapper:delete', this.artifactId);
+      },
+
+      _getDataWithArtifactId: function(){
+        return Object.assign(
+          {artifactId: this.artifactId},
+          this.data
+        );
       },
 
       _getStandardTypeText: function(i18n, standardType) {

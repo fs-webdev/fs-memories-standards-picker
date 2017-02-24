@@ -24,7 +24,9 @@
     "wc-i18n": "jshcrowthe/wc-i18n#2.x",
     "oak-i18n-behavior": "FamilySearchElements/oak-i18n-behavior#1.x",
     "fs-styles": "fs-webdev/fs-styles#2.x",
-    "fs-button": "jshcrowthe/fs-button"
+    "fs-button": "jshcrowthe/fs-button",
+    "iron-ajax": "1.x",
+    "oak-ajax-behavior": "FamilySearchElements/oak-ajax-behavior#1.x"
   },
   "devDependencies": {
     "fetch-mock": "https://unpkg.com/fetch-mock@5.5.0/es5/client-browserified.js",
