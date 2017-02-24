@@ -10,10 +10,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../cedar-alert/cedar-alert.html">
+<link rel="import" href="../cedar-dialog/cedar-dialog.html">
 <link rel="import" href="../birch-standards-picker/birch-standards-picker.html">
 <link rel="import" href="../wc-i18n/wc-i18n.html">
 <link rel="import" href="../fs-styles/fs-styles.html">
 <link rel="import" href="../fs-button/fs-button.html">
+<link rel="import" href="../iron-ajax/iron-ajax.html">
+<link rel="import" href="../oak-ajax-behavior/oak-ajax-behavior.html">
+<link rel="import" href="../oak-i18n-behavior/oak-i18n-behavior.html">
 
 <!--
 An element providing a solution to no problem in particular.
@@ -30,97 +34,111 @@ Example:
   <style include='fs-styles'></style>
   <link rel="import" type="css" href="birch-standards-picker-wrapper.css">
   <template>
-    <wc-i18n-src locale='[[_lang]]' locale-dir='[[localeDir()]]' domain='birch-standards-picker-wrapper'></wc-i18n-src>
-    <wc-i18n key='birch-standards-picker-wrapper.add' provider value='{{_i18nAdd}}'></wc-i18n>
-    <wc-i18n key='birch-standards-picker-wrapper.edit' provider value='{{_i18nEdit}}'></wc-i18n>
-    <wc-i18n key='birch-standards-picker-wrapper.delete' provider value='{{_i18nDelete}}'></wc-i18n>
-    <wc-i18n key='birch-standards-picker-wrapper.event_place' provider value='{{_i18nEventPlace}}'></wc-i18n>
-    <wc-i18n key='birch-standards-picker-wrapper.event_date' provider value='{{_i18nEventDate}}'></wc-i18n>
-    <wc-i18n key='birch-standards-picker-wrapper.add_event_place' provider value='{{_i18nAddEventPlace}}'></wc-i18n>
-    <wc-i18n key='birch-standards-picker-wrapper.add_event_date' provider value='{{_i18nAddEventDate}}'></wc-i18n>
-    <wc-i18n key='birch-standards-picker-wrapper.unable_to_save_date' provider value='{{_i18nSaveDateError}}'></wc-i18n>
-    <wc-i18n key='birch-standards-picker-wrapper.unable_to_save_place' provider value='{{i18nSavePlaceError}}'></wc-i18n>
+
+    <iron-ajax id="req"
+      url="[[_base]]/artifactmanager/artifacts/[[artifactId]]/datesplaces/DEFAULT/[[standardType]]"
+      method="[[_ajaxMethod]]"
+      headers="[[_headers]]"
+      on-response="_handleSuccess"
+      on-error="_handleError">
+    </iron-ajax>
+
+    <cedar-dialog id='confirmationDialog'>
+      <h4 modal-title>[[_getDeleteConfirmationTitle(i18n, standardType)]]</h4>
+      <p>[[_getDeleteConfirmationText(i18n, standardType)]]</p>
+      <div class='btn-container layout vertical center-justified'>
+        <button id="confirmDeleteButton" is="fs-button" option="destructive" on-tap='_handleDelete'>
+          [[i18n('delete')]]
+        </button>
+        <button is="fs-button" option="minor" dialog-dismiss>
+          [[i18n('cancel')]]
+        </button>
+      </div>
+    </cedar-dialog>
 
     <template is="dom-if" if="[[_same(mode, 'view')]]">
       <div id="view">
         <div class="top">
 
-          <template is="dom-if" if="[[_same(standardType, 'date')]]">
-            <span>[[_i18nEventDate]]</span>
-          </template>
+          <small class="flex-item vertical-center">[[_getStandardTypeText(i18n, standardType)]]</small>
 
-          <template is="dom-if" if="[[_same(standardType, 'place')]]">
-            <span>[[_i18nEventPlace]]</span>
-          </template>
-
-          <button
-            is="fs-button"
-            on-tap="_editMode"
-            option="minor">
-            [[_i18nEdit]]
-          </button>
-
-          <button
-            is="fs-button"
-            on-tap="_addMode"
-            option="minor">
-            [[_i18nDelete]]
-          </button>
-        </div>
-        <div class="main">
-
-          <template is="dom-if" if="[[_hasText(originalText, standardText)]]">
-            [[_getText(originalText, standardText)]]
-          </template>
-
-          <template is="dom-if" if="[[!_hasText(originalText, standardText)]]">
+          <template is="dom-if" if="[[_hasText(data)]]">
             <button
               is="fs-button"
-              on-tap="_addMode"
-              option="minor">
-              [[_i18nAdd]]
+              on-tap="_editMode"
+              option="minor"
+              class="flex-item edit-delete-button">
+              [[i18n('edit')]]
+            </button>
+
+            <small class="flex-item vertical-center">|</small>
+
+            <button
+              is="fs-button"
+              on-tap="_showDeleteConfirmation"
+              option="minor"
+              class="flex-item edit-delete-button">
+              [[i18n('delete')]]
             </button>
           </template>
+        </div>
 
+        <div class="main">
+          <template is="dom-if" if="[[_hasText(data)]]">
+            <span class="display-text vertical-center">[[_getText(data)]]</span>
+          </template>
+
+          <template is="dom-if" if="[[!_hasText(data)]]">
+            <button
+              class="add-button"
+              is="fs-button"
+              on-tap="_editMode"
+              option="minor">
+
+              <svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><title>Art</title><g fill="none" fill-rule="evenodd"><path d="M9.028 17.958c-4.908 0-8.9-3.993-8.9-8.9 0-4.908 3.992-8.9 8.9-8.9 4.907 0 8.9 3.992 8.9 8.9 0 4.906-3.992 8.9-8.9 8.9zm-1.03-4.15c0 .566.463 1.028 1.03 1.028s1.03-.462 1.03-1.03v-3.72h3.72c.567 0 1.03-.46 1.03-1.03 0-.567-.463-1.03-1.03-1.03h-3.72v-3.72c0-.567-.463-1.03-1.03-1.03s-1.03.463-1.03 1.03v3.72H4.28c-.567 0-1.03.463-1.03 1.03 0 .57.463 1.03 1.03 1.03h3.72v3.72z" fill="#0051C4"/><path d="M-1-1h20v20H-1z"/></g></svg>
+
+              <span class="add-button-text">[[i18n('add')]]</span>
+            </button>
+          </template>
         </div>
       </div>
     </template>
 
-    <template is="dom-if" if="[[_same(mode, 'add', 'edit')]]">
+    <template is="dom-if" if="[[_same(mode, 'edit')]]">
       <cedar-alert id="alert" alert-type="error" hidden>
         <template is="dom-if" if="[[_same(standardType, 'date')]]">
-          [[_i18nSaveDateError]]
+          [[i18n('unable_to_save_date')]]
         </template>
         <template is="dom-if" if="[[_same(standardType, 'place')]]">
-          [[i18nSavePlaceError]]
+          [[i18n('unable_to_save_place')]]
         </template>
       </cedar-alert>
 
       <birch-standards-picker id="picker"
-        hide-standards-dropdown
+        data="[[data]]"
+        search-term="[[_getText(data)]]"
         standard-type="[[standardType]]"
-        original-text="[[originalText]]"
-        standard-text="[[standardText]]"
-        standard-id="[[standardId]]"
         on-birch-typeahead:input="_handleInput"
-        on-birch-typeahead:selected="_handleSelection"
-        ></birch-standards-picker/>
+        on-birch-typeahead:selected="_handleSelection">
+      </birch-standards-picker/>
 
-      <button id="save-button"
-        is="fs-button"
-        on-tap="_handleSave"
-        option="recommended"
-        loading="[[_loading]]"
-        disabled$="[[_disableSaveButton]]">
-        <wc-i18n key='birch-standards-picker-wrapper.save'></wc-i18n>
-      </button>
+      <div class="save-cancel-buttons vertical-center">
+        <button id="save-button"
+          is="fs-button"
+          on-tap="_handleSave"
+          option="recommended"
+          loading="[[loading]]"
+          disabled$="[[_disableSaveButton]]">
+          [[i18n('save')]]
+        </button>
 
-      <button id="cancel-button"
-        is="fs-button"
-        on-tap="_viewMode"
-        option="minor">
-        <wc-i18n key='birch-standards-picker-wrapper.cancel'></wc-i18n>
-      </button>
+        <button id="cancel-button"
+          is="fs-button"
+          on-tap="_viewMode"
+          option="minor">
+          [[i18n('cancel')]]
+        </button>
+      </div>
     </template>
   </template>
 
@@ -129,38 +147,39 @@ Example:
       is: 'birch-standards-picker-wrapper',
 
       behaviors: [
-        WCI18nBehavior
+        OakI18nBehavior,
+        WCI18n()
       ],
 
       properties: {
+        artifactId: {
+          type: String,
+          value: ''
+        },
+
         mode: {
           type: String,
           value: 'view'
         },
 
-        originalText: {
-          type: String,
-          value: ''
-        },
-
-        standardText: {
-          type: String,
-          value: ''
-        },
-
-        standardId: {
-          type: String,
-          value: ''
+        data: {
+          type: Object,
+          value: function(){ return {}; }
         },
 
         standardType: {
           type: String,
-          value: ''
+          value: 'date'
         },
 
-        _loading: {
+        loading: {
           type: Boolean,
           value: false
+        },
+
+        _ajaxMethod: {
+          type: String,
+          value: ''
         },
 
         _disableSaveButton: {
@@ -169,34 +188,53 @@ Example:
         }
       },
 
+      listeners: {
+        'birch-standards-picker:update-data': '_handleDataChange',
+        'birch-standards-picker:error': '_handleError'
+      },
+
       reset: function() {
-        this.$$('#alert').hide();
-        this.$$('#picker')._handleChange({
-          detail: {value: ''}
-        });
-        this.$$('#picker').$.typeahead.loading = false;
+        var picker = this.$$('#picker');
+        var alert = this.$$('#alert');
+        if(picker){
+          picker.reset();
+          picker.data = this.data;
+          picker.$.typeahead.$.input.focus();
+        }
+        if(alert){
+          alert.hide();
+        }
         this._disableSaveButton = true;
-        this.$$('#picker').hideStandardsDropdown = true;
-        this.async(function(){
-          this.$$('#picker').$.typeahead.$.input.focus();
-        }, 100);
       },
 
       showErrorAlert: function() {
         this.$$('#alert').show();
-        this._loading = false;
-        this._disableSaveButton = false;
+        this.loading = false;
+      },
+
+      _updateData: function(data) {
+        this.data = Object.assign({}, data);
+      },
+
+      _handleDataChange: function(data) {
+        if(this.mode === 'view' || Object.keys(data).length === 0){
+          this._disableSaveButton = true;
+        } else {
+          this._disableSaveButton = false;
+        }
+      },
+
+      _handleError: function(e) {
+        this.$$('#alert').show();
       },
 
       _viewMode: function() {
+        this.reset();
         this.mode = 'view';
       },
 
-      _addMode: function() {
-        this.mode = 'add';
-      },
-
       _editMode: function() {
+        this._updateData(this.data);
         this.mode = 'edit';
       },
 
@@ -204,12 +242,12 @@ Example:
         return standardType === 'date' ? this._i18nEventDate : this._i18nEventPlace;
       },
 
-      _hasText: function(originalText, standardText) {
-        return !!(originalText || standardText);
+      _hasText: function(data) {
+        return !!(data.customText || data.standardText);
       },
 
-      _getText: function(originalText, standardText) {
-        return originalText || standardText;
+      _getText: function(data) {
+        return data.customText || data.standardText;
       },
 
       _handleSelection: function(e) {
@@ -219,20 +257,115 @@ Example:
       },
 
       _handleInput: function(e) {
-        if(!e || !e.detail || !e.detail.value) {
-          this.$$('#picker').$.typeahead.loading = false;
-          this.$$('#picker').hideStandardsDropdown = true;
-        }
         this._disableSaveButton = true;
       },
 
       _handleSave: function(e) {
-        if(this._disableSaveButton) return;
-        this.fire('birch-standards-picker-wrapper:save', {
-          originalText: this.originalText,
-          standardText: this.standardText,
-          standardId: this.standardId
-        });
+        if(!this.artifactId || this._disableSaveButton) return;
+        var picker = this.$$('#picker');
+
+        this._disableSaveButton = true;
+        this.loading = true;
+        picker.$.typeahead.$.input.disabled = true;
+
+        var data = picker.data;
+        var body = this.$.req.body = {};
+
+        if(this.standardType === 'date') {
+          body.dateNormalizedText = data.standardText || null;
+          body.dateNonStandardizedText = data.customText;
+        } else if(this.standardType === 'place') {
+          body.placeRepId = data.id;
+          body.placeNormalizedText = data.standardText;
+          body.placeNonStandardizedText = data.customText;
+        }
+
+        this._ajaxMethod = 'PUT';
+        this.$.req.generateRequest();
+      },
+
+      _handleSuccess: function(e) {
+        this.loading = false;
+        var picker = this.$$('#picker');
+        if(picker){
+          this.$$('#picker').$.typeahead.$.input.disabled = false;
+        }
+        this._disableSaveButton = true;
+        if(this._ajaxMethod === 'PUT'){
+          this._handleSaveSuccess(e)
+        } else {
+          this._handleDeleteSuccess(e);
+        }
+      },
+
+      _handleError: function(e) {
+        this.$.confirmDeleteButton.disabled = false;
+        this.$.confirmDeleteButton.loading = false;
+        this.$.confirmationDialog.close();
+        this.loading = false;
+        this.$$('#picker').$.typeahead.$.input.disabled = false;
+        this.$$('#alert').show();
+      },
+
+      _handleSaveSuccess: function(e) {
+        this.loading = false;
+
+        this.data = this.$$('#picker').data;
+        this._disableSaveButton = true;
+        this.mode = 'view';
+
+        this.fire('birch-standards-picker-wrapper:saved', this._getDataWithArtifactId());
+      },
+
+      _showDeleteConfirmation: function(e) {
+        this.$.confirmationDialog.open(e);
+      },
+
+      _handleDelete: function(e) {
+        if(!this.artifactId
+          || this.$.confirmationDialog.disabled
+          || (this.mode === 'edit' && this._disableSaveButton)){
+          return;
+        }
+
+        this.$.confirmDeleteButton.disabled = true;
+        this.$.confirmDeleteButton.loading = true;
+
+        this._ajaxMethod = 'DELETE';
+        this.$.req.body = {};
+        this.$.req.generateRequest();
+      },
+
+      _handleDeleteSuccess: function(e) {
+        this.$.confirmDeleteButton.disabled = false;
+        this.$.confirmDeleteButton.loading = false;
+        this.$.confirmationDialog.close();
+        this.loading = false;
+
+        this.data = {};
+        this._disableSaveButton = true;
+        this.mode = 'view';
+
+        this.fire('birch-standards-picker-wrapper:delete', {artifactId: this.artifactId});
+      },
+
+      _getDataWithArtifactId: function(){
+        return Object.assign(
+          {artifactId: this.artifactId},
+          this.data
+        );
+      },
+
+      _getStandardTypeText: function(i18n, standardType) {
+        return standardType === 'date' ? i18n('event_date') : i18n('event_place');
+      },
+
+      _getDeleteConfirmationTitle: function(i18n, standardType) {
+        return i18n('confirm_delete_' + standardType + '_title');
+      },
+
+      _getDeleteConfirmationText: function(i18n, standardType) {
+        return i18n('confirm_delete_' + standardType + '_title');
       },
 
       _same: function(a, b, c) {

@@ -1,12 +1,56 @@
 :host {
   display: block;
   box-sizing: border-box;
+  font-family: Verdana, sans-serif;
+  font-size: 12px;
+  max-width: 300px;
 }
 birch-standards-picker {
-  padding: 10px 0;
+  margin-bottom: 10px;
+  padding: 5px 3.5px;
+  padding: 0.35rem 0.25rem;
+}
+.display-text {
+  font-size: 14px;
+}
+.top {
+  width: 100%;
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row nowrap;
+}
+.top .flex-item {
+  flex: 0;
+}
+.top .flex-item:nth-child(1) {
+  flex: 1;
+}
+.vertical-center {
+  padding: 8.5px 5px 0;
+  padding: 0.531rem 0.25rem 0;
 }
 button {
-  /*width: 100%;*/
+  font-size: 14px !important;
+}
+.add-button {
+  padding: 0px 0 0 3px;
+}
+.add-button:hover {
+  text-decoration: none;
+}
+.add-button-text {
+  position: relative;
+  top: -3px;
+}
+.add-button:hover .add-button-text {
+  text-decoration: underline;
+}
+.edit-delete-button {
+  font-size: 12px !important;
+  padding: 8.5px 5px;
+  padding: 0.531rem 0.25rem 0;
+}
+.save-cancel-buttons button {
   margin: 0 0 20px 0 !important;
 }
 #save-button {

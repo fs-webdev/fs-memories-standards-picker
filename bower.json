@@ -20,11 +20,14 @@
   "dependencies": {
     "polymer": "Polymer/polymer#^1.2.0",
     "cedar-alert": "FamilySearchElements/cedar-alert#0.2.0",
-    "birch-standards-picker": "FamilySearchElements/birch-standards-picker#0.1.6",
-    "wc-i18n": "jshcrowthe/wc-i18n#^1.x",
-    "fs-behavior": "jshcrowthe/fs-behavior",
+    "birch-standards-picker": "FamilySearchElements/birch-standards-picker#2.x",
+    "wc-i18n": "jshcrowthe/wc-i18n#2.x",
+    "oak-i18n-behavior": "FamilySearchElements/oak-i18n-behavior#1.x",
     "fs-styles": "fs-webdev/fs-styles#2.x",
-    "fs-button": "jshcrowthe/fs-button"
+    "fs-button": "jshcrowthe/fs-button",
+    "iron-ajax": "1.x",
+    "oak-ajax-behavior": "FamilySearchElements/oak-ajax-behavior#1.x",
+    "cedar-dialog": "FamilySearchElements/cedar-dialog#adding-dialog"
   },
   "devDependencies": {
     "fetch-mock": "https://unpkg.com/fetch-mock@5.5.0/es5/client-browserified.js",
@@ -34,6 +37,7 @@
   },
   "resolutions": {
     "fs-styles": "2.x",
-    "polymer": "^1.2.0"
+    "polymer": "^1.2.0",
+    "wc-i18n": "^2.0.1"
   }
 }
