@@ -10,6 +10,9 @@ birch-standards-picker {
   padding: 5px 3.5px;
   padding: 0.35rem 0.25rem;
 }
+.display-text {
+  font-size: 14px;
+}
 .top {
   width: 100%;
   display: flex;
@@ -23,8 +26,8 @@ birch-standards-picker {
   flex: 1;
 }
 .vertical-center {
-  padding: 8.5px 5px;
-  padding: 0.531rem 0.25rem;
+  padding: 8.5px 5px 0;
+  padding: 0.531rem 0.25rem 0;
 }
 button {
   font-size: 14px !important;
@@ -32,14 +35,20 @@ button {
 .add-button {
   padding: 0px 0 0 3px;
 }
+.add-button:hover {
+  text-decoration: none;
+}
 .add-button-text {
   position: relative;
   top: -3px;
 }
+.add-button:hover .add-button-text {
+  text-decoration: underline;
+}
 .edit-delete-button {
   font-size: 12px !important;
   padding: 8.5px 5px;
-  padding: 0.531rem 0.25rem;
+  padding: 0.531rem 0.25rem 0;
 }
 .save-cancel-buttons button {
   margin: 0 0 20px 0 !important;

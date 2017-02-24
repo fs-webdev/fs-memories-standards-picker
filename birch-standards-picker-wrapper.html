@@ -47,7 +47,7 @@ Example:
       <h4 modal-title>[[_getDeleteConfirmationTitle(i18n, standardType)]]</h4>
       <p>[[_getDeleteConfirmationText(i18n, standardType)]]</p>
       <div class='btn-container layout vertical center-justified'>
-        <button is="fs-button" option="destructive" dialog-confirm on-tap='_handleDelete'>
+        <button id="confirmDeleteButton" is="fs-button" option="destructive" on-tap='_handleDelete'>
           [[i18n('delete')]]
         </button>
         <button is="fs-button" option="minor" dialog-dismiss>
@@ -85,7 +85,7 @@ Example:
 
         <div class="main">
           <template is="dom-if" if="[[_hasText(data)]]">
-            <p>[[_getText(data)]]</p>
+            <span class="display-text vertical-center">[[_getText(data)]]</span>
           </template>
 
           <template is="dom-if" if="[[!_hasText(data)]]">
@@ -299,6 +299,9 @@ Example:
       },
 
       _handleError: function(e) {
+        this.$.confirmDeleteButton.disabled = false;
+        this.$.confirmDeleteButton.loading = false;
+        this.$.confirmationDialog.close();
         this.loading = false;
         this.$$('#picker').$.typeahead.$.input.disabled = false;
         this.$$('#alert').show();
@@ -319,7 +322,14 @@ Example:
       },
 
       _handleDelete: function(e) {
-        if(!this.artifactId || (this.mode === 'edit' && this._disableSaveButton)) return;
+        if(!this.artifactId
+          || this.$.confirmationDialog.disabled
+          || (this.mode === 'edit' && this._disableSaveButton)){
+          return;
+        }
+
+        this.$.confirmDeleteButton.disabled = true;
+        this.$.confirmDeleteButton.loading = true;
 
         this._ajaxMethod = 'DELETE';
         this.$.req.body = {};
@@ -327,6 +337,9 @@ Example:
       },
 
       _handleDeleteSuccess: function(e) {
+        this.$.confirmDeleteButton.disabled = false;
+        this.$.confirmDeleteButton.loading = false;
+        this.$.confirmationDialog.close();
         this.loading = false;
 
         this.data = {};
