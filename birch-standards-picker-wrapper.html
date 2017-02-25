@@ -36,9 +36,9 @@ Example:
   <template>
 
     <iron-ajax id="req"
-      url="[[_base]]/artifactmanager/artifacts/[[artifactId]]/datesplaces/DEFAULT/[[standardType]]"
+      url="[[ajaxBase]]/artifactmanager/artifacts/[[artifactId]]/datesplaces/DEFAULT/[[standardType]]"
       method="[[_ajaxMethod]]"
-      headers="[[_headers]]"
+      headers="[[authHeaders]]"
       on-response="_handleSuccess"
       on-error="_handleError">
     </iron-ajax>
@@ -148,6 +148,7 @@ Example:
 
       behaviors: [
         OakI18nBehavior,
+        OakAJAXBehavior,
         WCI18n()
       ],
 
