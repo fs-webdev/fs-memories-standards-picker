@@ -85,11 +85,12 @@ Example:
 
         <div class="main">
           <template is="dom-if" if="[[_hasText(data)]]">
-            <template is="dom-if" if="[[!_hasStandard(data)]]">
+            <template is="dom-if" if="[[_hasNoStandardOrIsDate(standardType, data)]]">
               <span class="display-text vertical-center">[[_getText(data)]]</span>
             </template>
-            <template is="dom-if" if="[[_hasStandard(data)]]">
-              <a href="https://google.com/maps/search/[[data.standardText]]" target="_blank">
+            <template is="dom-if" if="[[!_hasNoStandardOrIsDate(standardType, data)]]">
+              <!-- <a href="https://google.com/maps/place/[[data.standardText]]" target="_blank"> -->
+              <a href="https://familysearch.org/research/places/place/[[data.id]]?name=[[data.standardText]]" target="_blank">
                 <span class="display-text vertical-center">[[_getText(data)]]</span>
               </a>
             </template>
@@ -357,8 +358,8 @@ Example:
         this.fire('birch-standards-picker-wrapper:delete', {artifactId: this.artifactId});
       },
 
-      _hasStandard: function(data) {
-        return !!data.standardText;
+      _hasNoStandardOrIsDate: function(standardType, data) {
+        return standardType === 'date' || (!data.id && !data.standardText);
       },
 
       _getDataWithArtifactId: function(){
