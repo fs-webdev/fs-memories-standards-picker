@@ -85,7 +85,14 @@ Example:
 
         <div class="main">
           <template is="dom-if" if="[[_hasText(data)]]">
-            <span class="display-text vertical-center">[[_getText(data)]]</span>
+            <template is="dom-if" if="[[!_hasStandard(data)]]">
+              <span class="display-text vertical-center">[[_getText(data)]]</span>
+            </template>
+            <template is="dom-if" if="[[_hasStandard(data)]]">
+              <a href="https://google.com/maps/search/[[data.standardText]]" target="_blank">
+                <span class="display-text vertical-center">[[_getText(data)]]</span>
+              </a>
+            </template>
           </template>
 
           <template is="dom-if" if="[[!_hasText(data)]]">
@@ -348,6 +355,10 @@ Example:
         this.mode = 'view';
 
         this.fire('birch-standards-picker-wrapper:delete', {artifactId: this.artifactId});
+      },
+
+      _hasStandard: function(data) {
+        return !!data.standardText;
       },
 
       _getDataWithArtifactId: function(){
