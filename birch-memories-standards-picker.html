@@ -56,6 +56,16 @@ Example:
       </div>
     </cedar-dialog>
 
+    <cedar-alert id="alert" alert-type="error" hidden>
+      [[i18n('error')]]
+      <!-- <template is="dom-if" if="[[_same(standardType, 'date')]]">
+        [[i18n('unable_to_save_date')]]
+      </template>
+      <template is="dom-if" if="[[_same(standardType, 'place')]]">
+        [[i18n('unable_to_save_place')]]
+      </template> -->
+    </cedar-alert>
+
     <template is="dom-if" if="[[_same(mode, 'view')]]">
       <div id="view">
         <div class="top">
@@ -113,15 +123,6 @@ Example:
     </template>
 
     <template is="dom-if" if="[[_same(mode, 'edit')]]">
-      <cedar-alert id="alert" alert-type="error" hidden>
-        <template is="dom-if" if="[[_same(standardType, 'date')]]">
-          [[i18n('unable_to_save_date')]]
-        </template>
-        <template is="dom-if" if="[[_same(standardType, 'place')]]">
-          [[i18n('unable_to_save_place')]]
-        </template>
-      </cedar-alert>
-
       <birch-standards-picker id="picker"
         data="[[data]]"
         search-term="[[_getText(data)]]"
@@ -204,21 +205,17 @@ Example:
 
       reset: function() {
         var picker = this.$$('#picker');
-        var alert = this.$$('#alert');
         if(picker){
           picker.reset();
           picker.data = this.data;
           picker.$.typeahead.$.input.focus();
         }
-        if(alert){
-          alert.hide();
-        }
+        this.$.alert.hide();
         this._disableSaveButton = true;
       },
 
       showErrorAlert: function() {
-        this.$$('#alert').show();
-        this.loading = false;
+        this.$.alert.show();
       },
 
       _updateData: function(data) {
@@ -231,10 +228,6 @@ Example:
         } else {
           this._disableSaveButton = false;
         }
-      },
-
-      _handleError: function(e) {
-        this.$$('#alert').show();
       },
 
       _viewMode: function() {
@@ -308,12 +301,16 @@ Example:
       },
 
       _handleError: function(e) {
+        console.log('err', e)
         this.$.confirmDeleteButton.disabled = false;
         this.$.confirmDeleteButton.loading = false;
         this.$.confirmationDialog.close();
         this.loading = false;
-        this.$$('#picker').$.typeahead.$.input.disabled = false;
-        this.$$('#alert').show();
+        var picker = this.$$('#picker');
+        if(picker){
+          picker.$.typeahead.$.input.disabled = false;
+        }
+        this.showErrorAlert();
       },
 
       _handleSaveSuccess: function(e) {

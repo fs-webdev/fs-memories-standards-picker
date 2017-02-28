@@ -10,6 +10,7 @@
   "confirm_delete_place_text": "Are you sure you want to delete this event place?",
   "delete": "Delete",
   "edit": "Edit",
+  "error": "An error occurred. Please try again later.",
   "event_date": "Event Date",
   "event_place": "Event Place",
   "save": "Save",
