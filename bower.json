@@ -1,5 +1,5 @@
 {
-  "name": "birch-standards-picker-wrapper",
+  "name": "birch-memories-standards-picker",
   "version": "1.0.7",
   "authors": [
     "Anonymous <anonymous@example.com>"
@@ -10,7 +10,7 @@
     "polymer",
     "seed"
   ],
-  "main": "birch-standards-picker-wrapper.html",
+  "main": "birch-memories-standards-picker.html",
   "license": "http://polymer.github.io/LICENSE.txt",
   "homepage": "https://github.com/<USERNAME>/seed-element/",
   "ignore": [

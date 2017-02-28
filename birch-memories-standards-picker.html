@@ -24,15 +24,15 @@ An element providing a solution to no problem in particular.
 
 Example:
 
-    <birch-standards-picker-wrapper></birch-standards-picker-wrapper>
+    <birch-memories-standards-picker></birch-memories-standards-picker>
 
 @demo demo/index.html
 @hero hero.svg
 -->
 
-<dom-module id="birch-standards-picker-wrapper">
+<dom-module id="birch-memories-standards-picker">
   <style include='fs-styles'></style>
-  <link rel="import" type="css" href="birch-standards-picker-wrapper.css">
+  <link rel="import" type="css" href="birch-memories-standards-picker.css">
   <template>
 
     <iron-ajax id="req"
@@ -152,7 +152,7 @@ Example:
 
   <script>
     Polymer({
-      is: 'birch-standards-picker-wrapper',
+      is: 'birch-memories-standards-picker',
 
       behaviors: [
         OakI18nBehavior,
@@ -323,7 +323,7 @@ Example:
         this._disableSaveButton = true;
         this.mode = 'view';
 
-        this.fire('birch-standards-picker-wrapper:saved', this._getDataWithArtifactId());
+        this.fire('birch-memories-standards-picker:saved', this._getDataWithArtifactId());
       },
 
       _showDeleteConfirmation: function(e) {
@@ -355,7 +355,7 @@ Example:
         this._disableSaveButton = true;
         this.mode = 'view';
 
-        this.fire('birch-standards-picker-wrapper:delete', {artifactId: this.artifactId});
+        this.fire('birch-memories-standards-picker:delete', {artifactId: this.artifactId});
       },
 
       _hasNoStandardOrIsDate: function(standardType, data) {

@@ -12,7 +12,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-    <title>birch-standards-picker-wrapper Demo</title>
+    <title>birch-memories-standards-picker Demo</title>
     <link rel="stylesheet" href="../../../components/fs-styles/dist/base.min.css">
     <script src="../../sinonjs/sinon.js"></script>
     <script>
@@ -71,15 +71,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <script>
       window.Polymer = { dom: 'shadow' };
     </script>
-    <link rel="import" href="../birch-standards-picker-wrapper.html">
+    <link rel="import" href="../birch-memories-standards-picker.html">
   </head>
   <body unresolved>
 
-    <birch-standards-picker-wrapper
+    <birch-memories-standards-picker
       mode="view"
       artifact-id="1234"
       standard-type="place">
-    </birch-standards-picker-wrapper>
+    </birch-memories-standards-picker>
 
     <div style="margin-top:50px;">
       <button id="toggle">Toggle Type</button>
@@ -89,18 +89,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <script>
       document.querySelector('#toggle').addEventListener('click', function() {
-        var el = document.querySelector('birch-standards-picker-wrapper');
+        var el = document.querySelector('birch-memories-standards-picker');
         el.setAttribute('standard-type', el.getAttribute('standard-type') === 'date' ? 'place' : 'date');
       });
 
       document.querySelector('#reset').addEventListener('click', function() {
-        var el = document.querySelector('birch-standards-picker-wrapper');
+        var el = document.querySelector('birch-memories-standards-picker');
         el.reset();
         el.data = {};
       });
 
       document.querySelector('#setup').addEventListener('click', function() {
-        var el = document.querySelector('birch-standards-picker-wrapper');
+        var el = document.querySelector('birch-memories-standards-picker');
         var placeData = {customText: "ca", id: "5773", standardText: "Caldas, Colombia"};
         var dateData = {standardText: "11 September 1981"};
         el.data = el.standardType === 'place' ? placeData : dateData;
