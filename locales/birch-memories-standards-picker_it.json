@@ -1,0 +1,20 @@
+{
+  "_LRM_PKTAG489": "birch-memories-standards-picker_1_151 - FULL-FILE",
+  "add": "Aggiungi",
+  "add_event_data": "Aggiungi dati dell’evento",
+  "add_event_date": "Aggiungi data dell’evento",
+  "add_event_place": "Aggiungi luogo dell’evento",
+  "cancel": "Annulla",
+  "confirm_delete_date_text": "Sei sicuro di voler cancellare la data di questo evento?",
+  "confirm_delete_date_title": "Cancellare data dell’evento?",
+  "confirm_delete_place_text": "Sei sicuro di voler cancellare il luogo di questo evento?",
+  "confirm_delete_place_title": "Cancellare luogo dell’evento?",
+  "delete": "Cancella",
+  "edit": "Modifica",
+  "error": "Si è verificato un errore. Riprova più tardi.",
+  "event_date": "Data dell’evento",
+  "event_place": "Luogo dell’evento",
+  "save": "Salva",
+  "unable_to_save_date": "Non è stato possibile salvare la data dell’evento. Riprova più tardi.",
+  "unable_to_save_place": "Non è stato possibile salvare il luogo dell’evento. Riprova più tardi."
+}
