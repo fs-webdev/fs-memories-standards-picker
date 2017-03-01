@@ -1,0 +1,20 @@
+{
+  "_LRM_PKTAG989": "birch-memories-standards-picker_1_152 - FULL-FILE",
+  "add": "追加",
+  "add_event_data": "出来事のデータを追加する",
+  "add_event_date": "出来事の日付を追加する",
+  "add_event_place": "出来事の場所を追加する",
+  "cancel": "キャンセル",
+  "confirm_delete_date_text": "ほんとうにこの出来事の日付を削除してよろしいですか。",
+  "confirm_delete_date_title": "出来事の日付を削除しますか。",
+  "confirm_delete_place_text": "ほんとうにこの出来事の場所を削除してよろしいですか。",
+  "confirm_delete_place_title": "出来事の場所を削除しますか。",
+  "delete": "削除",
+  "edit": "編集",
+  "error": "エラーが発生しました。あとで再度試してください。",
+  "event_date": "出来事の日付",
+  "event_place": "出来事の場所",
+  "save": "保存",
+  "unable_to_save_date": "出来事の日付を保存できません。あとで再度試してください。",
+  "unable_to_save_place": "出来事の場所を保存できません。あとで再度試してください。"
+}

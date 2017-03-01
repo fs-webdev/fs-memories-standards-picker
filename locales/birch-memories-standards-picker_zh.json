@@ -1,0 +1,20 @@
+{
+  "_LRM_PKTAG896": "birch-memories-standards-picker_1_156 - FULL-FILE",
+  "add": "加入",
+  "add_event_data": "加入事項資料",
+  "add_event_date": "加入事項日期",
+  "add_event_place": "加入事項地點",
+  "cancel": "取消",
+  "confirm_delete_date_text": "你確定要刪除此事項日期？",
+  "confirm_delete_date_title": "刪除事項日期？",
+  "confirm_delete_place_text": "你確定要刪除此事項地點？",
+  "confirm_delete_place_title": "刪除事項地點？",
+  "delete": "刪除",
+  "edit": "編輯",
+  "error": "發生錯誤。請稍後再試。",
+  "event_date": "事項日期",
+  "event_place": "事項地點",
+  "save": "儲存",
+  "unable_to_save_date": "無法儲存事項日期。請稍後再試。",
+  "unable_to_save_place": "無法儲存事項地點。請稍後再試。"
+}
