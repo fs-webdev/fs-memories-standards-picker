@@ -53,13 +53,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         });
 
         test('reset', function() {
-          
+          el._disableSaveButton = false;
+          var alertHideSpy = sinon.spy(el.$.alert, 'hide');
+
+          el.reset();
+          expect(el._disableSaveButton).to.be.true;
+          expect(alertHideSpy.calledOnce).to.be.true;
+
+          alertHideSpy.restore();
         });
 
         test('showErrorAlert', function() {
           var showSpy = sinon.spy(el.$.alert, 'show');
           el.showErrorAlert();
-          expect(showSpy).calledOnce;
+          expect(showSpy.calledOnce).to.be.true;
           showSpy.restore();
         });
 
@@ -73,20 +80,43 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         });
 
         test('_handleDataChange', function() {
-          
+          el.mode = 'view';
+          el._disableSaveButton = false;
+          el._handleDataChange();
+          expect(el._disableSaveButton).to.be.true;
+
+          el.mode = 'edit';
+          el._disableSaveButton = false;
+          el._handleDataChange({});
+          expect(el._disableSaveButton).to.be.true;
+
+          el.mode = 'edit';
+          el._disableSaveButton = false;
+          el._handleDataChange({hi: 'there'});
+          expect(el._disableSaveButton).to.be.false;
         });
 
         test('_viewMode', function() {
-          
+          var resetSpy = sinon.spy(el, 'reset');
+          el.mode = 'edit';
+          el._viewMode();
+          expect(el.mode).to.equal('view');
+          expect(resetSpy.calledOnce).to.be.true;
+          resetSpy.restore();
         });
 
         test('_editMode', function() {
-          
+          var updateDataSpy = sinon.spy(el, '_updateData');
+          el.mode = 'view';
+          el._editMode();
+          expect(el.mode).to.equal('edit');
+          expect(updateDataSpy.calledOnce).to.be.true;
+          updateDataSpy.restore();
         });
 
-        test('_getViewEventString', function() {
+        // test('_getViewEventString', function() {
           
-        });
+        // });
 
         test('_hasText', function() {
           expect(el._hasText({customText: 'a', standardText: 'b'})).to.be.true;
@@ -102,7 +132,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         });
 
         test('_handleSelection', function() {
-          
+          el._disableSaveButton = true;
+
+          el._handleSelection({detail: {}});
+          expect(el._disableSaveButton).to.be.true;
+
+          el._handleSelection({detail: {selection: {}}});
+          expect(el._disableSaveButton).to.be.false;
         });
 
         test('_handleInput', function() {
@@ -111,32 +147,125 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           expect(el._disableSaveButton).to.be.true;
         });
 
-        test('_handleSave', function() {
+        // test('_handleSave', function() {
           
-        });
+        // });
 
         test('_handleSuccess', function() {
-          
+          el.loading = true;
+          el_disableSaveButton = false;
+          el._ajaxMethod = 'PUT';
+          var saveSuccessSpy = sinon.spy(el, '_handleSaveSuccess');
+          var deleteSuccessSpy = sinon.spy(el, '_handleDeleteSuccess');
+
+          el._handleSuccess();
+          expect(el.loading).to.be.false;
+          expect(saveSuccessSpy.calledOnce).to.be.true;
+          expect(deleteSuccessSpy.called).to.be.false;
+
+          saveSuccessSpy.reset();
+          deleteSuccessSpy.reset();
+
+          el.loading = true;
+          el._ajaxMethod = 'DELETE';
+          el._handleSuccess();
+          expect(el.loading).to.be.false;
+          expect(deleteSuccessSpy.calledOnce).to.be.true;
+          expect(saveSuccessSpy.called).to.be.false;
+          saveSuccessSpy.restore();
+          deleteSuccessSpy.restore();
+
+          saveSuccessSpy.restore();
+          deleteSuccessSpy.restore();
         });
 
         test('_handleError', function() {
-          
+          var closeDialogSpy = sinon.spy(el.$.confirmationDialog, 'close');
+          var showAlertSpy = sinon.spy(el, 'showErrorAlert');
+          el.loading = true;
+          el.$.confirmDeleteButton.disabled = true;
+          el.$.confirmDeleteButton.loading = true;
+
+          el._handleError();
+          expect(el.loading).to.be.false;
+          expect(el.$.confirmDeleteButton.disabled).to.be.false;
+          expect(el.$.confirmDeleteButton.loading).to.be.false;
+          expect(closeDialogSpy.calledOnce).to.be.true;
+          expect(showAlertSpy.calledOnce).to.be.true;
+
+          closeDialogSpy.restore();
+          showAlertSpy.restore();
         });
 
         test('_handleSaveSuccess', function() {
-          
+          el.loading = true;
+          el._disableSaveButton = false;
+          el.mode = 'edit';
+
+          el._handleSaveSuccess();
+          expect(el.loading).to.be.false;
+          expect(el._disableSaveButton).to.be.true;
+          expect(el.mode).to.equal('view');
         });
 
         test('_showDeleteConfirmation', function() {
-          
+          var openConfrimDeleteSpy = sinon.spy(el.$.confirmationDialog, 'open');
+          el._showDeleteConfirmation();
+          expect(openConfrimDeleteSpy.calledOnce).to.be.true;
+          openConfrimDeleteSpy.restore();
         });
 
         test('_handleDelete', function() {
-          
+          el.artifactId = '';
+          el.$.confirmDeleteButton.disabled = true;
+          el.mode = 'edit';
+          el._disableSaveButton = true;
+          el._ajaxMethod = 'PUT';
+          el.$.req.body = {bogus: 'data'};
+          var generateRequestSpy = sinon.spy(el.$.req, 'generateRequest');
+
+          el._handleDelete();
+          expect(generateRequestSpy.calledOnce).to.be.false;
+
+          el.artifactId = '1234';
+          el._handleDelete();
+          expect(generateRequestSpy.calledOnce).to.be.false;
+
+          el.$.confirmDeleteButton.disabled = false;
+          el._handleDelete();
+          expect(generateRequestSpy.calledOnce).to.be.false;
+
+          el.mode = 'view';
+          el._handleDelete();
+          expect(el.$.confirmDeleteButton.disabled).to.be.true;
+          expect(el.$.confirmDeleteButton.loading).to.be.true;
+          expect(el._ajaxMethod).to.equal('DELETE');
+          expect(Object.keys(el.$.req.body).length).to.equal(0);
+          expect(generateRequestSpy.calledOnce).to.be.true;
+
+          generateRequestSpy.restore();
         });
 
         test('_handleDeleteSuccess', function() {
-          
+          el.mode = 'edit';
+          el.loading = true;
+          el.data = {bogus: 'data'};
+          el._disableSaveButton = false;
+          el.$.confirmDeleteButton.loading = true;
+          el.$.confirmDeleteButton.disabled = true;
+          var closeDialogSpy = sinon.spy(el.$.confirmationDialog, 'close');
+
+          el._handleDeleteSuccess();
+
+          expect(el.mode).to.equal('view');
+          expect(el.loading).to.be.false;
+          expect(Object.keys(el.data).length).to.equal(0);
+          expect(el._disableSaveButton).to.be.true;
+          expect(el.$.confirmDeleteButton.loading).to.be.false;
+          expect(el.$.confirmDeleteButton.disabled).to.be.false;
+          expect(closeDialogSpy.calledOnce).to.be.true;
+
+          closeDialogSpy.restore();
         });
 
         test('_hasNoStandardOrIsDate', function() {
@@ -144,6 +273,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           expect(el._hasNoStandardOrIsDate('date', {hi: 'there'})).to.be.true;
           expect(el._hasNoStandardOrIsDate('date', {id: 1234})).to.be.true;
           expect(el._hasNoStandardOrIsDate('date', {standardText: 'California'})).to.be.true;
+
           expect(el._hasNoStandardOrIsDate('place', {})).to.be.true;
           expect(el._hasNoStandardOrIsDate('place', {hi: 'there'})).to.be.true;
           expect(el._hasNoStandardOrIsDate('place', {id: 1234})).to.be.false;
@@ -157,17 +287,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           expect(dataWithArtifactId.artifactId).to.equal('1234');
         });
 
-        test('_getStandardTypeText', function() {
+        // test('_getStandardTypeText', function() {
           
-        });
+        // });
 
-        test('_getDeleteConfirmationTitle', function() {
+        // test('_getDeleteConfirmationTitle', function() {
           
-        });
+        // });
 
-        test('_getDeleteConfirmationText', function() {
+        // test('_getDeleteConfirmationText', function() {
           
-        });
+        // });
 
         test('_same', function() {
           expect(el._same(1, 1)).to.be.true;

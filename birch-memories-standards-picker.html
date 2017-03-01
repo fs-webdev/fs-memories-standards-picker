@@ -255,7 +255,10 @@ Example:
       _handleSelection: function(e) {
         if(!e || !e.detail || !e.detail.selection) return;
         this._disableSaveButton = false;
-        this.$$('#picker').hideStandardsDropdown = false;
+        var picker = this.$$('#picker');
+        if(picker){
+          picker.hideStandardsDropdown = false;
+        }
       },
 
       _handleInput: function(e) {
@@ -268,22 +271,24 @@ Example:
 
         this._disableSaveButton = true;
         this.loading = true;
-        picker.$.typeahead.$.input.disabled = true;
+        if(picker){
+          picker.$.typeahead.$.input.disabled = true;
 
-        var data = picker.data;
-        var body = this.$.req.body = {};
+          var data = picker.data;
+          var body = this.$.req.body = {};
 
-        if(this.standardType === 'date') {
-          body.dateNormalizedText = data.standardText || null;
-          body.dateNonStandardizedText = data.customText;
-        } else if(this.standardType === 'place') {
-          body.placeRepId = data.id;
-          body.placeNormalizedText = data.standardText;
-          body.placeNonStandardizedText = data.customText;
+          if(this.standardType === 'date') {
+            body.dateNormalizedText = data.standardText || null;
+            body.dateNonStandardizedText = data.customText;
+          } else if(this.standardType === 'place') {
+            body.placeRepId = data.id;
+            body.placeNormalizedText = data.standardText;
+            body.placeNonStandardizedText = data.customText;
+          }
+
+          this._ajaxMethod = 'PUT';
+          this.$.req.generateRequest();
         }
-
-        this._ajaxMethod = 'PUT';
-        this.$.req.generateRequest();
       },
 
       _handleSuccess: function(e) {
@@ -301,7 +306,6 @@ Example:
       },
 
       _handleError: function(e) {
-        console.log('err', e)
         this.$.confirmDeleteButton.disabled = false;
         this.$.confirmDeleteButton.loading = false;
         this.$.confirmationDialog.close();
@@ -316,7 +320,10 @@ Example:
       _handleSaveSuccess: function(e) {
         this.loading = false;
 
-        this.data = this.$$('#picker').data;
+        var picker = this.$$('#picker');
+        if(picker){
+          this.data = picker.data;
+        }
         this._disableSaveButton = true;
         this.mode = 'view';
 
@@ -329,7 +336,7 @@ Example:
 
       _handleDelete: function(e) {
         if(!this.artifactId
-          || this.$.confirmationDialog.disabled
+          || this.$.confirmDeleteButton.disabled
           || (this.mode === 'edit' && this._disableSaveButton)){
           return;
         }
