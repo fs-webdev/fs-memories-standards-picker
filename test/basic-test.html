@@ -15,6 +15,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
     <script src="../../web-component-tester/browser.js"></script>
+    <script src="../../sinonjs/sinon.js"></script>
 
     <!-- Step 1: import the element to test -->
     <link rel="import" href="../birch-memories-standards-picker.html">
@@ -24,8 +25,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <!-- You can use the document as a place to set up your fixtures. -->
     <test-fixture id="birch-memories-standards-picker-fixture">
       <template>
-        <birch-memories-standards-picker>
-          <h2>birch-memories-standards-picker</h2>
+        <birch-memories-standards-picker
+          artifact-id="1234"
+          standard-type="place">
         </birch-memories-standards-picker>
       </template>
     </test-fixture>
@@ -33,36 +35,146 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <script>
       suite('<birch-memories-standards-picker>', function() {
 
-        var myEl;
+        var el;
+
+        function setupData() {
+          var placeData = {customText: "ca", id: "5773", standardText: "Caldas, Colombia"};
+          var dateData = {standardText: "11 September 1981"};
+          el.data = el.standardType === 'place' ? placeData : dateData;
+        }
+
+        function resetData() {
+          el.reset();
+          el.data = {};
+        }
 
         setup(function() {
-          myEl = fixture('birch-memories-standards-picker-fixture');
+          el = fixture('birch-memories-standards-picker-fixture');
         });
 
-        test('defines the "author" property', function() {
-          assert.equal(myEl.author.name, 'Dimitri Glazkov');
-          assert.equal(myEl.author.image, 'http://addyosmani.com/blog/wp-content/uploads/2013/04/unicorn.jpg');
+        test('reset', function() {
+          
         });
 
-        test('says hello', function() {
-          assert.equal(myEl.sayHello(), 'birch-memories-standards-picker says, Hello World!');
-
-          var greetings = myEl.sayHello('greetings Earthlings');
-          assert.equal(greetings, 'birch-memories-standards-picker says, greetings Earthlings');
+        test('showErrorAlert', function() {
+          var showSpy = sinon.spy(el.$.alert, 'show');
+          el.showErrorAlert();
+          expect(showSpy).calledOnce;
+          showSpy.restore();
         });
 
-        test('fires lasers', function(done) {
-          myEl.addEventListener('birch-memories-standards-picker-lasers', function(event) {
-            assert.equal(event.detail.sound, 'Pew pew!');
-            done();
-          });
-          myEl.fireLasers();
+        test('_updateData', function() {
+          el.data = {a: 'a', b: 'b', c: 'c'};
+          el._updateData({a: 'b', b: 'a', x: 'x'});
+          expect(el.data.a).to.equal('b');
+          expect(el.data.b).to.equal('a');
+          expect(el.data.x).to.equal('x');
+          expect(el.data.c).to.be.undefined;
         });
 
-        test('distributed children', function() {
-          var els = myEl.getContentChildren();
-          assert.equal(els.length, 1, 'one distributed node');
-          assert.equal(els[0], myEl.querySelector('h2'), 'content distributed correctly');
+        test('_handleDataChange', function() {
+          
+        });
+
+        test('_viewMode', function() {
+          
+        });
+
+        test('_editMode', function() {
+          
+        });
+
+        test('_getViewEventString', function() {
+          
+        });
+
+        test('_hasText', function() {
+          expect(el._hasText({customText: 'a', standardText: 'b'})).to.be.true;
+          expect(el._hasText({customText: 'a', standardText: ''})).to.be.true;
+          expect(el._hasText({customText: '', standardText: 'b'})).to.be.true;
+          expect(el._hasText({customText: '', standardText: ''})).to.be.false;
+        });
+
+        test('_getText', function() {
+          expect(el._getText({customText: 'a', standardText: 'b'})).to.equal('a');
+          expect(el._getText({customText: 'a', standardText: ''})).to.equal('a');
+          expect(el._getText({customText: '', standardText: 'b'})).to.equal('b');
+        });
+
+        test('_handleSelection', function() {
+          
+        });
+
+        test('_handleInput', function() {
+          el._disableSaveButton = false;
+          el._handleInput();
+          expect(el._disableSaveButton).to.be.true;
+        });
+
+        test('_handleSave', function() {
+          
+        });
+
+        test('_handleSuccess', function() {
+          
+        });
+
+        test('_handleError', function() {
+          
+        });
+
+        test('_handleSaveSuccess', function() {
+          
+        });
+
+        test('_showDeleteConfirmation', function() {
+          
+        });
+
+        test('_handleDelete', function() {
+          
+        });
+
+        test('_handleDeleteSuccess', function() {
+          
+        });
+
+        test('_hasNoStandardOrIsDate', function() {
+          expect(el._hasNoStandardOrIsDate('date', {})).to.be.true;
+          expect(el._hasNoStandardOrIsDate('date', {hi: 'there'})).to.be.true;
+          expect(el._hasNoStandardOrIsDate('date', {id: 1234})).to.be.true;
+          expect(el._hasNoStandardOrIsDate('date', {standardText: 'California'})).to.be.true;
+          expect(el._hasNoStandardOrIsDate('place', {})).to.be.true;
+          expect(el._hasNoStandardOrIsDate('place', {hi: 'there'})).to.be.true;
+          expect(el._hasNoStandardOrIsDate('place', {id: 1234})).to.be.false;
+          expect(el._hasNoStandardOrIsDate('place', {standardText: 'California'})).to.be.false;
+        });
+
+        test('_getDataWithArtifactId', function() {
+          setupData();
+          expect(el.data.artifactId).to.be.undefined;
+          var dataWithArtifactId = el._getDataWithArtifactId();
+          expect(dataWithArtifactId.artifactId).to.equal('1234');
+        });
+
+        test('_getStandardTypeText', function() {
+          
+        });
+
+        test('_getDeleteConfirmationTitle', function() {
+          
+        });
+
+        test('_getDeleteConfirmationText', function() {
+          
+        });
+
+        test('_same', function() {
+          expect(el._same(1, 1)).to.be.true;
+          expect(el._same(1, 2)).to.be.false;
+          expect(el._same(2, 1)).to.be.false;
+          expect(el._same(1, 2, 1)).to.be.true;
+          expect(el._same(1, 2, 2)).to.be.false;
         });
 
       });
