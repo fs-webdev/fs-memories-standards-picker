@@ -1,0 +1,20 @@
+{
+  "_LRM_PKTAG245": "birch-memories-standards-picker_1_153 - FULL-FILE",
+  "add": "추가",
+  "add_event_data": "사건 데이터 추가",
+  "add_event_date": "사건 날짜 추가",
+  "add_event_place": "사건 장소 추가",
+  "cancel": "취소",
+  "confirm_delete_date_text": "이 사건 날짜를 정말 삭제하시겠습니까?",
+  "confirm_delete_date_title": "사건 날짜를 삭제하시겠습니까?",
+  "confirm_delete_place_text": "이 사건 장소를 정말 삭제하시겠습니까?",
+  "confirm_delete_place_title": "사건 장소를 삭제하시겠습니까?",
+  "delete": "삭제",
+  "edit": "편집",
+  "error": "오류가 발생했습니다. 나중에 다시 시도해 주십시오.",
+  "event_date": "사건 날짜",
+  "event_place": "사건 장소",
+  "save": "저장",
+  "unable_to_save_date": "사건 날짜를 저장할 수 없습니다. 나중에 다시 시도해 주십시오.",
+  "unable_to_save_place": "사건 장소를 저장할 수 없습니다. 나중에 다시 시도해 주십시오."
+}
