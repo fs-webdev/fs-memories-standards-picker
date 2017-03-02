@@ -36,6 +36,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         var el;
         var initialArtifact = {id: '1234'};
+        var mockI18n = function(key) {return 'KEY: ' + key + ' (en)';};
 
         function setupData() {
           var artifact = {
@@ -58,6 +59,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         setup(function() {
           el = fixture('birch-memories-standards-picker-fixture');
+          el.i18n = mockI18n;
         });
 
         test('reset', function() {
@@ -125,10 +127,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           expect(updateDataSpy.calledOnce).to.be.true;
           updateDataSpy.restore();
         });
-
-        // test('_getViewEventString', function() {
-          
-        // });
 
         test('_hasText', function() {
           expect(el._hasText({customText: 'a', standardText: 'b'})).to.be.true;
@@ -292,17 +290,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           expect(el._hasNoStandardOrIsDate('place', {standardText: 'California'})).to.be.false;
         });
 
-        // test('_getStandardTypeText', function() {
-          
-        // });
+        test('_getStandardTypeText', function() {
+          expect(el._getStandardTypeText(mockI18n, 'date')).to.equal('KEY: event_date (en)');
+          expect(el._getStandardTypeText(mockI18n, 'place')).to.equal('KEY: event_place (en)');
+        });
 
-        // test('_getDeleteConfirmationTitle', function() {
-          
-        // });
-
-        // test('_getDeleteConfirmationText', function() {
-          
-        // });
+        test('_getDeleteConfirmationTitle', function() {
+          expect(el._getDeleteConfirmationTitle(mockI18n, 'date')).to.equal('KEY: confirm_delete_date_title (en)');
+          expect(el._getDeleteConfirmationTitle(mockI18n, 'place')).to.equal('KEY: confirm_delete_place_title (en)');
+        });
 
         test('_same', function() {
           expect(el._same(1, 1)).to.be.true;

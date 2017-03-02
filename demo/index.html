@@ -104,24 +104,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       document.querySelector('#reset').addEventListener('click', function() {
         var el = document.querySelector('birch-memories-standards-picker');
         el.reset();
-        el.data = {};
+        el.artifact = Object.assign({}, initialArtifact);
       });
 
       document.querySelector('#setup').addEventListener('click', function() {
         var el = document.querySelector('birch-memories-standards-picker');
 
-      var artifact = {
-        id: '1234',
-        datesPlaces: [{
-          placeRepId: '5773',
-          placeNonStandardizedText: 'ca',
-          placeNormalizedText: 'Caldas, Colombia',
-          dateNonStandardizedText: undefined,
-          dateNormalizedText: '11 September 1981'
-        }]
-      };
+        var artifact = {
+          id: '1234',
+          datesPlaces: [{
+            placeRepId: '5773',
+            placeNonStandardizedText: 'ca',
+            placeNormalizedText: 'Caldas, Colombia',
+            dateNonStandardizedText: undefined,
+            dateNormalizedText: '11 September 1981'
+          }]
+        };
 
-        el.artifact = artifact;
+        el.artifact = Object.assign({}, artifact);
       });
     </script>
   </body>

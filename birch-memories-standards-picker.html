@@ -241,6 +241,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             standardText: dp[this.standardType + 'NormalizedText'],
             customText: dp[this.standardType + 'NonStandardizedText']
           };
+        } else {
+          this._data = {};
         }
       },
 
@@ -260,10 +262,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       _editMode: function() {
         this._updateData(this._data);
         this.mode = 'edit';
-      },
-
-      _getViewEventString: function(standardType) {
-        return standardType === 'date' ? this._i18nEventDate : this._i18nEventPlace;
       },
 
       _hasText: function(data) {
@@ -397,10 +395,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       _getDeleteConfirmationTitle: function(i18n, standardType) {
-        return i18n('confirm_delete_' + standardType + '_title');
-      },
-
-      _getDeleteConfirmationText: function(i18n, standardType) {
         return i18n('confirm_delete_' + standardType + '_title');
       },
 
