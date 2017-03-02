@@ -36,16 +36,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       suite('<birch-memories-standards-picker>', function() {
 
         var el;
+        var initialArtifact = {id: '1234'};
 
         function setupData() {
-          var placeData = {customText: "ca", id: "5773", standardText: "Caldas, Colombia"};
-          var dateData = {standardText: "11 September 1981"};
-          el.data = el.standardType === 'place' ? placeData : dateData;
+          var artifact = {
+            id: '1234',
+            datesPlaces: [{
+              placeRepId: '5773',
+              placeNonStandardizedText: 'ca',
+              placeNormalizedText: 'Caldas, Colombia',
+              dateNonStandardizedText: undefined,
+              dateNormalizedText: '11 September 1981'
+            }]
+          };
+          el.artifact = artifact;
         }
 
         function resetData() {
           el.reset();
-          el.data = {};
+          el.artifact = initialArtifact;
         }
 
         setup(function() {
@@ -71,12 +80,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         });
 
         test('_updateData', function() {
-          el.data = {a: 'a', b: 'b', c: 'c'};
+          el._data = {a: 'a', b: 'b', c: 'c'};
           el._updateData({a: 'b', b: 'a', x: 'x'});
-          expect(el.data.a).to.equal('b');
-          expect(el.data.b).to.equal('a');
-          expect(el.data.x).to.equal('x');
-          expect(el.data.c).to.be.undefined;
+          expect(el._data.a).to.equal('b');
+          expect(el._data.b).to.equal('a');
+          expect(el._data.x).to.equal('x');
+          expect(el._data.c).to.be.undefined;
         });
 
         test('_handleDataChange', function() {
@@ -216,7 +225,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         });
 
         test('_handleDelete', function() {
-          el.artifactId = '';
+          el.artifact.id = '';
           el.$.confirmDeleteButton.disabled = true;
           el.mode = 'edit';
           el._disableSaveButton = true;
@@ -227,7 +236,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           el._handleDelete();
           expect(generateRequestSpy.calledOnce).to.be.false;
 
-          el.artifactId = '1234';
+          el.artifact.id = '1234';
           el._handleDelete();
           expect(generateRequestSpy.calledOnce).to.be.false;
 
@@ -249,7 +258,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         test('_handleDeleteSuccess', function() {
           el.mode = 'edit';
           el.loading = true;
-          el.data = {bogus: 'data'};
+          el._data = {bogus: 'data'};
           el._disableSaveButton = false;
           el.$.confirmDeleteButton.loading = true;
           el.$.confirmDeleteButton.disabled = true;
@@ -259,7 +268,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           expect(el.mode).to.equal('view');
           expect(el.loading).to.be.false;
-          expect(Object.keys(el.data).length).to.equal(0);
+          expect(Object.keys(el._data).length).to.equal(0);
           expect(el._disableSaveButton).to.be.true;
           expect(el.$.confirmDeleteButton.loading).to.be.false;
           expect(el.$.confirmDeleteButton.disabled).to.be.false;
@@ -278,13 +287,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           expect(el._hasNoStandardOrIsDate('place', {hi: 'there'})).to.be.true;
           expect(el._hasNoStandardOrIsDate('place', {id: 1234})).to.be.false;
           expect(el._hasNoStandardOrIsDate('place', {standardText: 'California'})).to.be.false;
-        });
-
-        test('_getDataWithArtifactId', function() {
-          setupData();
-          expect(el.data.artifactId).to.be.undefined;
-          var dataWithArtifactId = el._getDataWithArtifactId();
-          expect(dataWithArtifactId.artifactId).to.equal('1234');
         });
 
         // test('_getStandardTypeText', function() {
