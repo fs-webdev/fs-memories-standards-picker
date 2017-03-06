@@ -262,6 +262,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       _editMode: function() {
         this._updateData(this._data);
         this.mode = 'edit';
+        this.async(function(){
+          var picker = this.$$('#picker');
+          if(picker){
+            picker.$.typeahead.$.input.focus();
+          }
+        });
       },
 
       _hasText: function(data) {
