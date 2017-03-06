@@ -20,12 +20,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../oak-i18n-behavior/oak-i18n-behavior.html">
 
 <!--
-An element providing a solution to no problem in particular.
-
-Example:
-
-    <birch-memories-standards-picker></birch-memories-standards-picker>
-
 @demo demo/index.html
 @hero hero.svg
 -->
@@ -36,7 +30,7 @@ Example:
   <template>
 
     <iron-ajax id="req"
-      url="[[ajaxBase]]/artifactmanager/artifacts/[[artifactId]]/datesplaces/DEFAULT/[[standardType]]"
+      url="[[ajaxBase]]/artifactmanager/artifacts/[[artifact.id]]/datesplaces/DEFAULT/[[standardType]]"
       method="[[_ajaxMethod]]"
       headers="[[authHeaders]]"
       on-response="_handleSuccess"
@@ -45,7 +39,6 @@ Example:
 
     <cedar-dialog id='confirmationDialog'>
       <h4 modal-title>[[_getDeleteConfirmationTitle(i18n, standardType)]]</h4>
-      <p>[[_getDeleteConfirmationText(i18n, standardType)]]</p>
       <div class='btn-container layout vertical center-justified'>
         <button id="confirmDeleteButton" is="fs-button" option="destructive" on-tap='_handleDelete'>
           [[i18n('delete')]]
@@ -58,12 +51,6 @@ Example:
 
     <cedar-alert id="alert" alert-type="error" hidden>
       [[i18n('error')]]
-      <!-- <template is="dom-if" if="[[_same(standardType, 'date')]]">
-        [[i18n('unable_to_save_date')]]
-      </template>
-      <template is="dom-if" if="[[_same(standardType, 'place')]]">
-        [[i18n('unable_to_save_place')]]
-      </template> -->
     </cedar-alert>
 
     <template is="dom-if" if="[[_same(mode, 'view')]]">
@@ -72,7 +59,7 @@ Example:
 
           <small class="flex-item vertical-center">[[_getStandardTypeText(i18n, standardType)]]</small>
 
-          <template is="dom-if" if="[[_hasText(data)]]">
+          <template is="dom-if" if="[[_hasText(_data)]]">
             <button
               is="fs-button"
               on-tap="_editMode"
@@ -94,19 +81,18 @@ Example:
         </div>
 
         <div class="main">
-          <template is="dom-if" if="[[_hasText(data)]]">
-            <template is="dom-if" if="[[_hasNoStandardOrIsDate(standardType, data)]]">
-              <p class="display-text vertical-center">[[_getText(data)]]</p>
+          <template is="dom-if" if="[[_hasText(_data)]]">
+            <template is="dom-if" if="[[_hasNoStandardOrIsDate(standardType, _data)]]">
+              <p class="display-text vertical-center">[[_getText(_data)]]</p>
             </template>
-            <template is="dom-if" if="[[!_hasNoStandardOrIsDate(standardType, data)]]">
-              <!-- <a href="https://google.com/maps/place/[[data.standardText]]" target="_blank"> -->
-              <a href="https://familysearch.org/research/places/place/[[data.id]]?name=[[data.standardText]]" target="_blank">
-                <p class="display-text vertical-center">[[_getText(data)]]</p>
+            <template is="dom-if" if="[[!_hasNoStandardOrIsDate(standardType, _data)]]">
+              <a href="https://familysearch.org/research/places/place/[[_data.placeRepId]]?name=[[_data.standardText]]" target="_blank">
+                <p class="display-text vertical-center">[[_getText(_data)]]</p>
               </a>
             </template>
           </template>
 
-          <template is="dom-if" if="[[!_hasText(data)]]">
+          <template is="dom-if" if="[[!_hasText(_data)]]">
             <button
               class="add-button"
               is="fs-button"
@@ -124,8 +110,8 @@ Example:
 
     <template is="dom-if" if="[[_same(mode, 'edit')]]">
       <birch-standards-picker id="picker"
-        data="[[data]]"
-        search-term="[[_getText(data)]]"
+        data="[[_data]]"
+        search-term="[[_getText(_data)]]"
         standard-type="[[standardType]]"
         on-birch-typeahead:input="_handleInput"
         on-birch-typeahead:selected="_handleSelection">
@@ -162,19 +148,16 @@ Example:
       ],
 
       properties: {
-        artifactId: {
-          type: String,
-          value: ''
+        artifact: {
+          type: Object,
+          value: function(){ return {}; },
+          observer: '_handleArtifactChange',
+          notifies: true
         },
 
         mode: {
           type: String,
           value: 'view'
-        },
-
-        data: {
-          type: Object,
-          value: function(){ return {}; }
         },
 
         standardType: {
@@ -185,6 +168,11 @@ Example:
         loading: {
           type: Boolean,
           value: false
+        },
+
+        _data: {
+          type: Object,
+          value: function(){ return {}; }
         },
 
         _ajaxMethod: {
@@ -207,7 +195,7 @@ Example:
         var picker = this.$$('#picker');
         if(picker){
           picker.reset();
-          picker.data = this.data;
+          picker.data = this._data;
           picker.$.typeahead.$.input.focus();
         }
         this.$.alert.hide();
@@ -218,8 +206,44 @@ Example:
         this.$.alert.show();
       },
 
+      _updateArtifact: function(data){
+        if(Object.keys(data).length){
+          var dp = {};
+          if(this.artifact.datesPlaces && this.artifact.datesPlaces[0]){
+            dp = this.artifact.datesPlaces[0];
+          }
+
+          dp.placeRepId = data.placeRepId,
+          dp[this.standardType + 'NormalizedText'] = data.standardText,
+          dp[this.standardType + 'NonStandardizedText'] = data.customText
+
+          this.artifact.datesPlaces = [dp];
+        } else {
+          delete this.artifact.datesPlaces;
+        }
+
+        this.artifact = Object.assign({}, this.artifact);
+      },
+
       _updateData: function(data) {
-        this.data = Object.assign({}, data);
+        this._data = Object.assign({}, data);
+      },
+
+      _handleArtifactChange: function(artifact) {
+        var dp;
+        if(this.artifact.datesPlaces && this.artifact.datesPlaces[0]){
+          dp = this.artifact.datesPlaces[0];
+        }
+
+        if(dp){
+          this._data = {
+            placeRepId: dp.placeRepId,
+            standardText: dp[this.standardType + 'NormalizedText'],
+            customText: dp[this.standardType + 'NonStandardizedText']
+          };
+        } else {
+          this._data = {};
+        }
       },
 
       _handleDataChange: function(data) {
@@ -236,12 +260,14 @@ Example:
       },
 
       _editMode: function() {
-        this._updateData(this.data);
+        this._updateData(this._data);
         this.mode = 'edit';
-      },
-
-      _getViewEventString: function(standardType) {
-        return standardType === 'date' ? this._i18nEventDate : this._i18nEventPlace;
+        this.async(function(){
+          var picker = this.$$('#picker');
+          if(picker){
+            picker.$.typeahead.$.input.focus();
+          }
+        });
       },
 
       _hasText: function(data) {
@@ -266,7 +292,7 @@ Example:
       },
 
       _handleSave: function(e) {
-        if(!this.artifactId || this._disableSaveButton) return;
+        if(!this.artifact || !this.artifact.id || this._disableSaveButton) return;
         var picker = this.$$('#picker');
 
         this._disableSaveButton = true;
@@ -281,7 +307,7 @@ Example:
             body.dateNormalizedText = data.standardText || null;
             body.dateNonStandardizedText = data.customText;
           } else if(this.standardType === 'place') {
-            body.placeRepId = data.id;
+            body.placeRepId = data.placeRepId;
             body.placeNormalizedText = data.standardText;
             body.placeNonStandardizedText = data.customText;
           }
@@ -322,12 +348,14 @@ Example:
 
         var picker = this.$$('#picker');
         if(picker){
-          this.data = picker.data;
+          this._data = picker.data;
         }
         this._disableSaveButton = true;
         this.mode = 'view';
 
-        this.fire('birch-memories-standards-picker:saved', this._getDataWithArtifactId());
+        this._updateArtifact(this._data);
+        console.log(this.artifact);
+        this.fire('birch-memories-standards-picker:update-artifact', this.artifact);
       },
 
       _showDeleteConfirmation: function(e) {
@@ -335,7 +363,7 @@ Example:
       },
 
       _handleDelete: function(e) {
-        if(!this.artifactId
+        if(!this.artifact.id
           || this.$.confirmDeleteButton.disabled
           || (this.mode === 'edit' && this._disableSaveButton)){
           return;
@@ -355,22 +383,17 @@ Example:
         this.$.confirmationDialog.close();
         this.loading = false;
 
-        this.data = {};
+        this._data = {};
         this._disableSaveButton = true;
         this.mode = 'view';
 
-        this.fire('birch-memories-standards-picker:delete', {artifactId: this.artifactId});
+        this._updateArtifact(this._data);
+        console.log(this.artifact);
+        this.fire('birch-memories-standards-picker:update-artifact', this.artifact);
       },
 
       _hasNoStandardOrIsDate: function(standardType, data) {
         return standardType === 'date' || (!data.id && !data.standardText);
-      },
-
-      _getDataWithArtifactId: function(){
-        return Object.assign(
-          {artifactId: this.artifactId},
-          this.data
-        );
       },
 
       _getStandardTypeText: function(i18n, standardType) {
@@ -378,10 +401,6 @@ Example:
       },
 
       _getDeleteConfirmationTitle: function(i18n, standardType) {
-        return i18n('confirm_delete_' + standardType + '_title');
-      },
-
-      _getDeleteConfirmationText: function(i18n, standardType) {
         return i18n('confirm_delete_' + standardType + '_title');
       },
 
