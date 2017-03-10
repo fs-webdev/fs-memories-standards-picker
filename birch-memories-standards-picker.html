@@ -313,7 +313,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             body.dateNormalizedText = data.standardText || null;
             body.dateNonStandardizedText = data.customText;
           } else if(this.standardType === 'place') {
-            body.placeRepId = data.placeRepId;
+            body.placeRepId = data.id;
             body.placeNormalizedText = data.standardText;
             body.placeNonStandardizedText = data.customText;
           }
