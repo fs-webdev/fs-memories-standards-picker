@@ -361,7 +361,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.mode = 'view';
 
         this._updateArtifact(this._data);
-        this.fire('birch-memories-standards-picker:update-artifact', this.artifact);
+        this.fire('birch-memories-standards-picker:update-artifact', {artifact: this.artifact});
       },
 
       _showDeleteConfirmation: function(e) {
@@ -394,7 +394,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.mode = 'view';
 
         this._updateArtifact(this._data);
-        this.fire('birch-memories-standards-picker:update-artifact', this.artifact);
+        this.fire('birch-memories-standards-picker:update-artifact', {artifact: this.artifact});
       },
 
       _hasNoStandardOrIsDate: function(standardType, data) {
