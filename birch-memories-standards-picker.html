@@ -237,19 +237,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             customText: dp[this.standardType + 'NonStandardizedText'],
             label: dp.label
           };
-          // If artifactmanager has bad data, correct it
-          // An artifact should not have both standard and custom text
-          if(this._data.standardText === this._data.customText){
-            delete this._data.customText;
-            delete this._data.label;
-          }
           var picker = this.$$('#picker');
           if(picker){
             this._data.label = picker.data.label;
           }
+          // If artifactmanager has bad data, correct it
+          // An artifact should not have both standard and custom text
+          if(this._data.standardText === this._data.customText){
+            delete this._data.customText;
+            this._data.label = this._data.standardText;
+          }
         } else {
           this._data = {};
         }
+        this._updateData(this._data);
       },
 
       _handleDataChange: function(data) {
