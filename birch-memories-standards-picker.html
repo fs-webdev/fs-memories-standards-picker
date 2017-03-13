@@ -192,12 +192,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       reset: function() {
-        var picker = this.$$('#picker');
-        if(picker){
-          picker.reset();
-          picker.data = this._data;
-          picker.$.typeahead.$.input.focus();
-        }
         this.$.alert.hide();
         this._disableSaveButton = true;
       },
@@ -213,9 +207,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             dp = this.artifact.datesPlaces[0];
           }
 
-          dp.placeRepId = data.placeRepId,
-          dp[this.standardType + 'NormalizedText'] = data.standardText,
-          dp[this.standardType + 'NonStandardizedText'] = data.customText
+          dp.placeRepId = data.placeRepId;
+          dp[this.standardType + 'NormalizedText'] = data.standardText;
+          dp[this.standardType + 'NonStandardizedText'] = data.customText;
+          dp.label = data.label;
 
           this.artifact.datesPlaces = [dp];
         } else {
@@ -239,8 +234,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           this._data = {
             placeRepId: dp.placeRepId,
             standardText: dp[this.standardType + 'NormalizedText'],
-            customText: dp[this.standardType + 'NonStandardizedText']
+            customText: dp[this.standardType + 'NonStandardizedText'],
+            label: dp.label
           };
+          var picker = this.$$('#picker');
+          if(picker){
+            this._data.label = picker.data.label;
+          }
         } else {
           this._data = {};
         }
@@ -260,8 +260,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       _editMode: function() {
-        this._updateData(this._data);
         this.mode = 'edit';
+        this._updateData(this._data);
         this.async(function(){
           var picker = this.$$('#picker');
           if(picker){
@@ -307,7 +307,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             body.dateNormalizedText = data.standardText || null;
             body.dateNonStandardizedText = data.customText;
           } else if(this.standardType === 'place') {
-            body.placeRepId = data.placeRepId;
+            body.placeRepId = data.id;
             body.placeNormalizedText = data.standardText;
             body.placeNonStandardizedText = data.customText;
           }
@@ -349,13 +349,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var picker = this.$$('#picker');
         if(picker){
           this._data = picker.data;
+          this._data.label = picker.data.label
         }
         this._disableSaveButton = true;
         this.mode = 'view';
 
         this._updateArtifact(this._data);
-        console.log(this.artifact);
-        this.fire('birch-memories-standards-picker:update-artifact', this.artifact);
+        this.fire('birch-memories-standards-picker:update-artifact', {artifact: this.artifact});
       },
 
       _showDeleteConfirmation: function(e) {
@@ -388,8 +388,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.mode = 'view';
 
         this._updateArtifact(this._data);
-        console.log(this.artifact);
-        this.fire('birch-memories-standards-picker:update-artifact', this.artifact);
+        this.fire('birch-memories-standards-picker:update-artifact', {artifact: this.artifact});
       },
 
       _hasNoStandardOrIsDate: function(standardType, data) {
