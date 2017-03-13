@@ -194,6 +194,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       reset: function() {
         this.$.alert.hide();
         this._disableSaveButton = true;
+        var picker = this.$$('#picker');
+        if(picker){
+          picker.reset();
+        }
       },
 
       showErrorAlert: function() {
