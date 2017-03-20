@@ -87,9 +87,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <p class="display-text vertical-center">[[_getText(_data)]]</p>
             </template>
             <template is="dom-if" if="[[!_hasNoStandardOrIsDate(standardType, _data)]]">
-              <a href="https://familysearch.org/research/places/place/[[_data.placeRepId]]?name=[[_data.standardText]]" target="_blank">
+              <!-- Disabling map links for now until the product is completed -->
+              <!-- <a href="https://familysearch.org/research/places/place/[[_data.placeRepId]]?name=[[_data.standardText]]" target="_blank">
                 <p class="display-text vertical-center">[[_getText(_data)]]</p>
-              </a>
+              </a> -->
+              <p class="display-text vertical-center">[[_getText(_data)]]</p>
             </template>
           </template>
 
