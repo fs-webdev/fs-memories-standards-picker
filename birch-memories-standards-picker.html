@@ -194,6 +194,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         'birch-standards-picker:error': '_handleError'
       },
 
+      ready: function() {
+        this._handleArtifactChange(this.artifact);
+      },
+
       reset: function() {
         this.$.alert.hide();
         this._disableSaveButton = true;
@@ -233,8 +237,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _handleArtifactChange: function(artifact) {
         var dp;
-        if(this.artifact.datesPlaces && this.artifact.datesPlaces[0]){
-          dp = this.artifact.datesPlaces[0];
+        if(artifact.datesPlaces && artifact.datesPlaces[0]){
+          dp = artifact.datesPlaces[0];
         }
 
         if(dp){
