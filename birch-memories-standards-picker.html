@@ -217,20 +217,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       _updateArtifact: function(data){
-        if(Object.keys(data).length){
-          var dp = {};
-          if(this.artifact.datesPlaces && this.artifact.datesPlaces[0]){
-            dp = this.artifact.datesPlaces[0];
-          }
+        var dp = {};
+        if(this.artifact.datesPlaces && this.artifact.datesPlaces[0]){
+          dp = this.artifact.datesPlaces[0];
+        }
 
+        if(Object.keys(data).length){
           dp.placeRepId = data.placeRepId;
           dp[this.standardType + 'NormalizedText'] = data.standardText;
           dp[this.standardType + 'NonStandardizedText'] = data.customText;
           dp.label = data.label;
-
           this.artifact.datesPlaces = [dp];
-        } else {
-          delete this.artifact.datesPlaces;
+        } else if(Object.keys(dp).length) {
+          delete dp[this.standardType + 'NormalizedText'];
+          delete dp[this.standardType + 'NonStandardizedText'];
         }
 
         this.artifact = Object.assign({}, this.artifact);
