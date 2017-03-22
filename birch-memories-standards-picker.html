@@ -60,7 +60,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           <small class="flex-item vertical-center">[[_getStandardTypeText(i18n, standardType)]]</small>
 
-          <template is="dom-if" if="[[_hasText(_data)]]">
+          <template is="dom-if" if="[[_hasTextAndEditable(_data, _editable)]]">
             <button
               is="fs-button"
               on-tap="_editMode"
@@ -178,6 +178,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           value: function(){ return {}; }
         },
 
+        _editable: {
+          type: Boolean,
+          value: false
+        },
+
         _ajaxMethod: {
           type: String,
           value: ''
@@ -236,6 +241,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       _handleArtifactChange: function(artifact) {
+        if(!artifact) return;
         var dp;
         if(artifact.datesPlaces && artifact.datesPlaces[0]){
           dp = artifact.datesPlaces[0];
@@ -262,6 +268,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           this._data = {};
         }
         this._updateData(this._data);
+        this._editable = !!artifact.editableByCaller;
       },
 
       _handleDataChange: function(data) {
@@ -291,6 +298,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _hasText: function(data) {
         return !!(data.customText || data.standardText);
+      },
+
+      _hasTextAndEditable: function(data, editable) {
+        return editable && this._hasText(data);
       },
 
       _getText: function(data) {
