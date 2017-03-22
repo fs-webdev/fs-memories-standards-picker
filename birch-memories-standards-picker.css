@@ -20,7 +20,7 @@ birch-standards-picker {
   flex-flow: row nowrap;
 }
 .top .flex-item {
-  flex: 0;
+  flex: 0 1 auto;
 }
 .top .flex-item:nth-child(1) {
   flex: 1;
