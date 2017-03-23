@@ -95,7 +95,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </template>
           </template>
 
-          <template is="dom-if" if="[[!_hasText(_data)]]">
+          <template is="dom-if" if="[[_hasNoTextAndEditable(_data, _editable)]]">
             <button
               class="add-button"
               is="fs-button"
@@ -304,6 +304,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _hasTextAndEditable: function(data, editable) {
         return editable && this._hasText(data);
+      },
+
+      _hasNoTextAndEditable: function(data, editable) {
+        return editable && !this._hasText(data);
       },
 
       _getText: function(data) {
