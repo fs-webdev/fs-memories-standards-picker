@@ -271,7 +271,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this._editable = !!artifact.editableByCaller;
       },
 
-      _handleDataChange: function(data) {
+      _handleDataChange: function(e) {
+        if(!e || !e.detail || !e.detail.data) return;
+        var data = e.detail.data;
         if(this.mode === 'view' || Object.keys(data).length === 0){
           this._disableSaveButton = true;
         } else {
