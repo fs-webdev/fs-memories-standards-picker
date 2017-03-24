@@ -84,14 +84,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <div class="main">
           <template is="dom-if" if="[[_hasText(_data)]]">
             <template is="dom-if" if="[[_hasNoStandardOrIsDate(standardType, _data)]]">
-              <p class="display-text vertical-center">[[_getText(_data)]]</p>
+              <p class="display-text vertical-center">[[_getLocalizedText(_data)]]</p>
             </template>
             <template is="dom-if" if="[[!_hasNoStandardOrIsDate(standardType, _data)]]">
               <!-- Disabling map links for now until the product is completed -->
               <!-- <a href="https://familysearch.org/research/places/place/[[_data.placeRepId]]?name=[[_data.standardText]]" target="_blank">
-                <p class="display-text vertical-center">[[_getText(_data)]]</p>
+                <p class="display-text vertical-center">[[_getLocalizedText(_data)]]</p>
               </a> -->
-              <p class="display-text vertical-center">[[_getText(_data)]]</p>
+              <p class="display-text vertical-center">[[_getLocalizedText(_data)]]</p>
             </template>
           </template>
 
@@ -250,6 +250,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         if(dp){
           this._data = {
             placeRepId: dp.placeRepId,
+            localizedText: dp[this.standardType + 'LocalizedText'],
             standardText: dp[this.standardType + 'NormalizedText'],
             customText: dp[this.standardType + 'NonStandardizedText'],
             label: dp.label
@@ -312,6 +313,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _getText: function(data) {
         return data.customText || data.standardText;
+      },
+
+      _getLocalizedText: function(data) {
+        return data.customText || data.localizedText || data.standardText;
       },
 
       _handleSelection: function(e) {
