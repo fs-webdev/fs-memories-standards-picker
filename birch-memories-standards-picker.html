@@ -229,11 +229,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           dp.label = data.label;
           dp.earliestAstro = data.earliestAstro;
           dp.latestAstro = data.latestAstro;
+          delete dp[this.standardType + 'LocalizedText'];
           this.artifact.datesPlaces = [dp];
         } else if(Object.keys(dp).length) {
           delete dp[this.standardType + 'NormalizedText'];
           delete dp[this.standardType + 'NonStandardizedText'];
           if(this.standardType === 'date'){
+            delete dp[this.standardType + 'LocalizedText'];
             delete dp.earliestAstro;
             delete dp.latestAstro;
           }
@@ -403,6 +405,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         this._updateArtifact(this._data);
         this.fire('birch-memories-standards-picker:update-artifact', {artifact: this.artifact});
+        console.log(this.artifact);
       },
 
       _showDeleteConfirmation: function(e) {
