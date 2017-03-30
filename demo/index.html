@@ -92,7 +92,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </div>
 
     <script>
-      var initialArtifact = {id: '1234'};
+      var initialArtifact = {id: '1234', editableByCaller: true};
 
       document.querySelector('birch-memories-standards-picker').artifact = initialArtifact;
 
@@ -112,6 +112,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         var artifact = {
           id: '1234',
+          editableByCaller: true,
           datesPlaces: [{
             placeRepId: '5773',
             placeNonStandardizedText: 'ca',
