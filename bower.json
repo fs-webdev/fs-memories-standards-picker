@@ -32,7 +32,6 @@
   "devDependencies": {
     "fetch-mock": "https://unpkg.com/fetch-mock@5.5.0/es5/client-browserified.js",
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
-    "qa-shared-mock-json": "https://github.com/fs-eng/qa-shared-mock-json.git",
     "web-component-tester": "^4.0.0"
   },
   "resolutions": {
