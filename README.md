@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/FamilySearchElements/birch-memories-standards-picker.svg?branch=master)](https://travis-ci.org/FamilySearchElements/birch-memories-standards-picker)
 # birch-memories-standards-picker
 
 An element providing a starting point for your own reusable Polymer elements.
