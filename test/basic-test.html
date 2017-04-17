@@ -94,19 +94,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         });
 
         test('_handleDataChange', function() {
+          var eventStub = { detail: { data: {} } };
           el.mode = 'view';
           el._disableSaveButton = false;
-          el._handleDataChange();
+          el._handleDataChange(eventStub);
           expect(el._disableSaveButton).to.be.true;
 
           el.mode = 'edit';
           el._disableSaveButton = false;
-          el._handleDataChange({});
+          eventStub.detail.data = {};
+          el._handleDataChange(eventStub);
           expect(el._disableSaveButton).to.be.true;
 
           el.mode = 'edit';
           el._disableSaveButton = false;
-          el._handleDataChange({hi: 'there'});
+          eventStub.detail.data = {hi: 'there'}
+          el._handleDataChange(eventStub);
           expect(el._disableSaveButton).to.be.false;
         });
 
