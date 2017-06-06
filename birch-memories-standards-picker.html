@@ -229,6 +229,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           dp.label = data.label;
           dp.earliestAstro = data.earliestAstro;
           dp.latestAstro = data.latestAstro;
+          dp.dateSortKey = data.sortKeyShort;
           delete dp[this.standardType + 'LocalizedText'];
           this.artifact.datesPlaces = [dp];
         } else if(Object.keys(dp).length) {
