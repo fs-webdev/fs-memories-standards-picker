@@ -32,6 +32,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </test-fixture>
 
     <script>
+      FS = {};
+      FS.Analytics = {
+        trackLink: function() {},
+        trackData: function() {}
+      };
       suite('<birch-memories-standards-picker>', function() {
 
         var el;
@@ -161,7 +166,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         });
 
         // test('_handleSave', function() {
-          
+
         // });
 
         test('_handleSuccess', function() {
