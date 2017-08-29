@@ -304,9 +304,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       _editMode: function(e) {
         this.mode = 'edit';
         this._updateData(this._data);
-        if (e && e.currentTarget && e.currentTarget.id == 'addBtn') {
+        if (e.currentTarget.id == 'addBtn') {
           this.fireMetrics({link_name: this.standardType + ' - Add'});
-        } else if (e && e.currentTarget){
+        } else {
           this.fireMetrics({link_name: this.standardType + ' - Edit'});
         }
         this.async(function(){
