@@ -14,6 +14,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../birch-standards-picker/birch-standards-picker.html">
 <link rel="import" href="../wc-i18n/wc-i18n.html">
 <link rel="import" href="../fs-styles/fs-styles.html">
+<link rel="import" href="../fs-metrics/fs-metrics.html">
 <link rel="import" href="../styles-wc/fs-button/fs-button.html">
 <link rel="import" href="../iron-ajax/iron-ajax.html">
 <link rel="import" href="../oak-ajax-behavior/oak-ajax-behavior.html">
@@ -100,6 +101,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               class="add-button"
               is="fs-button"
               on-tap="_editMode"
+              id="addBtn"
               option="minor">
 
               <svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><title>Art</title><g fill="none" fill-rule="evenodd"><path d="M9.028 17.958c-4.908 0-8.9-3.993-8.9-8.9 0-4.908 3.992-8.9 8.9-8.9 4.907 0 8.9 3.992 8.9 8.9 0 4.906-3.992 8.9-8.9 8.9zm-1.03-4.15c0 .566.463 1.028 1.03 1.028s1.03-.462 1.03-1.03v-3.72h3.72c.567 0 1.03-.46 1.03-1.03 0-.567-.463-1.03-1.03-1.03h-3.72v-3.72c0-.567-.463-1.03-1.03-1.03s-1.03.463-1.03 1.03v3.72H4.28c-.567 0-1.03.463-1.03 1.03 0 .57.463 1.03 1.03 1.03h3.72v3.72z" fill="#0051C4"/><path d="M-1-1h20v20H-1z"/></g></svg>
@@ -147,7 +149,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       behaviors: [
         OakI18nBehavior,
         OakAJAXBehavior,
-        WCI18n()
+        WCI18n(),
+        FsBehaviors.Metrics
       ],
 
       properties: {
@@ -293,13 +296,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _viewMode: function() {
         this.reset();
+        this.fireMetrics({link_name: this.standardType + ' - Cancel'});
         this.fire('birch-memories-standards-picker:cancel');
         this.mode = 'view';
       },
 
-      _editMode: function() {
+      _editMode: function(e) {
         this.mode = 'edit';
         this._updateData(this._data);
+        if (e.currentTarget.id == 'addBtn') {
+          this.fireMetrics({link_name: this.standardType + ' - Add'});
+        } else {
+          this.fireMetrics({link_name: this.standardType + ' - Edit'});
+        }
         this.async(function(){
           var picker = this.$$('#picker');
           if(picker){
@@ -361,6 +370,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             body.placeNormalizedText = data.standardText;
             body.placeNonStandardizedText = data.customText;
           }
+
+          this.fireMetrics({link_name: this.standardType + ' - Save'});
 
           this._ajaxMethod = 'PUT';
           this.$.req.generateRequest();
@@ -439,6 +450,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.mode = 'view';
 
         this._updateArtifact(this._data);
+        this.fireMetrics({link_name: this.standardType + ' - Delete'});
         this.fire('birch-memories-standards-picker:update-artifact', {artifact: this.artifact});
       },
 
