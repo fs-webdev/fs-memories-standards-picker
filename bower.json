@@ -27,7 +27,8 @@
     "styles-wc": "fs-webdev/styles-wc#2.x",
     "iron-ajax": "1.x",
     "oak-ajax-behavior": "FamilySearchElements/oak-ajax-behavior#1.x",
-    "cedar-dialog": "FamilySearchElements/cedar-dialog#adding-dialog"
+    "cedar-dialog": "FamilySearchElements/cedar-dialog#adding-dialog",
+    "fs-metrics": "fs-webdev/fs-metrics#0.x"
   },
   "devDependencies": {
     "fetch-mock": "https://unpkg.com/fetch-mock@5.5.0/es5/client-browserified.js",
