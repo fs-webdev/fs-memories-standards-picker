@@ -14,6 +14,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../birch-standards-picker/birch-standards-picker.html">
 <link rel="import" href="../wc-i18n/wc-i18n.html">
 <link rel="import" href="../fs-styles/fs-styles.html">
+<link rel="import" href="../fs-metrics/fs-metrics.html">
 <link rel="import" href="../styles-wc/fs-button/fs-button.html">
 <link rel="import" href="../iron-ajax/iron-ajax.html">
 <link rel="import" href="../oak-ajax-behavior/oak-ajax-behavior.html">
@@ -147,7 +148,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       behaviors: [
         OakI18nBehavior,
         OakAJAXBehavior,
-        WCI18n()
+        WCI18n(),
+        FsBehaviors.Metrics
       ],
 
       properties: {
@@ -293,13 +295,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _viewMode: function() {
         this.reset();
+        this.fireMetrics({link_name: this.standardType + ' - Cancel'});
         this.fire('birch-memories-standards-picker:cancel');
         this.mode = 'view';
       },
 
-      _editMode: function() {
+      _editMode: function(e) {
         this.mode = 'edit';
         this._updateData(this._data);
+        if (e.currentTarget.classList[0] == 'add-button') {
+          this.fireMetrics({link_name: this.standardType + ' - Add'});
+        } else {
+          this.fireMetrics({link_name: this.standardType + ' - Edit'});
+        }
         this.async(function(){
           var picker = this.$$('#picker');
           if(picker){
@@ -361,6 +369,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             body.placeNormalizedText = data.standardText;
             body.placeNonStandardizedText = data.customText;
           }
+
+          this.fireMetrics({link_name: this.standardType + ' - Save'});
 
           this._ajaxMethod = 'PUT';
           this.$.req.generateRequest();
@@ -439,6 +449,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.mode = 'view';
 
         this._updateArtifact(this._data);
+        this.fireMetrics({link_name: this.standardType + ' - Delete'});
         this.fire('birch-memories-standards-picker:update-artifact', {artifact: this.artifact});
       },
 
