@@ -18,16 +18,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <script src="../../sinonjs/sinon.js"></script>
 
     <!-- Step 1: import the element to test -->
-    <link rel="import" href="../birch-memories-standards-picker.html">
+    <link rel="import" href="../fs-memories-standards-picker.html">
   </head>
   <body>
 
     <!-- You can use the document as a place to set up your fixtures. -->
-    <test-fixture id="birch-memories-standards-picker-fixture">
+    <test-fixture id="fs-memories-standards-picker-fixture">
       <template>
-        <birch-memories-standards-picker
+        <fs-memories-standards-picker
           standard-type="place">
-        </birch-memories-standards-picker>
+        </fs-memories-standards-picker>
       </template>
     </test-fixture>
 
@@ -37,7 +37,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         trackLink: function() {},
         trackData: function() {}
       };
-      suite('<birch-memories-standards-picker>', function() {
+      suite('<fs-memories-standards-picker>', function() {
 
         var el;
         var initialArtifact = {id: '1234'};
@@ -63,7 +63,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
 
         setup(function() {
-          el = fixture('birch-memories-standards-picker-fixture');
+          el = fixture('fs-memories-standards-picker-fixture');
           el.i18n = mockI18n;
         });
 

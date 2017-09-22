@@ -1,5 +1,5 @@
 {
-  "name": "birch-memories-standards-picker",
+  "name": "fs-memories-standards-picker",
   "version": "1.3.3",
   "authors": [
     "Anonymous <anonymous@example.com>"
@@ -10,7 +10,7 @@
     "polymer",
     "seed"
   ],
-  "main": "birch-memories-standards-picker.html",
+  "main": "fs-memories-standards-picker.html",
   "license": "http://polymer.github.io/LICENSE.txt",
   "homepage": "https://github.com/<USERNAME>/seed-element/",
   "ignore": [
@@ -33,7 +33,7 @@
   "devDependencies": {
     "fetch-mock": "https://unpkg.com/fetch-mock@5.5.0/es5/client-browserified.js",
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
-    "web-component-tester": "^4.0.0"
+    "web-component-tester": "^6.2.0"
   },
   "resolutions": {
     "fs-styles": "2.x",

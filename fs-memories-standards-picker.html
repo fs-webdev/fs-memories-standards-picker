@@ -25,9 +25,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 @hero hero.svg
 -->
 
-<dom-module id="birch-memories-standards-picker">
+<dom-module id="fs-memories-standards-picker">
   <style include='fs-styles'></style>
-  <link rel="import" type="css" href="birch-memories-standards-picker.css">
+  <link rel="import" type="css" href="fs-memories-standards-picker.css">
   <template>
 
     <iron-ajax id="req"
@@ -144,7 +144,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <script>
     Polymer({
-      is: 'birch-memories-standards-picker',
+      is: 'fs-memories-standards-picker',
 
       behaviors: [
         OakI18nBehavior,
@@ -297,7 +297,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       _viewMode: function() {
         this.reset();
         this.fireMetrics({link_name: this.standardType + ' - Cancel'});
-        this.fire('birch-memories-standards-picker:cancel');
+        this.fire('fs-memories-standards-picker:cancel');
         this.mode = 'view';
       },
 
@@ -416,7 +416,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.mode = 'view';
 
         this._updateArtifact(this._data);
-        this.fire('birch-memories-standards-picker:update-artifact', {artifact: this.artifact});
+        this.fire('fs-memories-standards-picker:update-artifact', {artifact: this.artifact});
         console.log(this.artifact);
       },
 
@@ -451,7 +451,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         this._updateArtifact(this._data);
         this.fireMetrics({link_name: this.standardType + ' - Delete'});
-        this.fire('birch-memories-standards-picker:update-artifact', {artifact: this.artifact});
+        this.fire('fs-memories-standards-picker:update-artifact', {artifact: this.artifact});
       },
 
       _hasNoStandardOrIsDate: function(standardType, data) {
