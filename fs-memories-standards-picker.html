@@ -9,9 +9,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../cedar-alert/cedar-alert.html">
+<link rel="import" href="../fs-alert/fs-alert.html">
 <link rel="import" href="../cedar-dialog/cedar-dialog.html">
-<link rel="import" href="../birch-standards-picker/birch-standards-picker.html">
+<link rel="import" href="../fs-standards-picker/fs-standards-picker.html">
 <link rel="import" href="../wc-i18n/wc-i18n.html">
 <link rel="import" href="../fs-styles/fs-styles.html">
 <link rel="import" href="../fs-metrics/fs-metrics.html">
@@ -51,9 +51,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </div>
     </cedar-dialog>
 
-    <cedar-alert id="alert" alert-type="error" hidden>
+    <fs-alert id="alert" alert-type="error" hidden>
       [[i18n('error')]]
-    </cedar-alert>
+    </fs-alert>
 
     <template is="dom-if" if="[[_same(mode, 'view')]]">
       <div id="view">
@@ -114,13 +114,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </template>
 
     <template is="dom-if" if="[[_same(mode, 'edit')]]">
-      <birch-standards-picker id="picker"
+      <fs-standards-picker id="picker"
         data="[[_data]]"
         search-term="[[_getText(_data)]]"
         standard-type="[[standardType]]"
         on-birch-typeahead:input="_handleInput"
         on-birch-typeahead:selected="_handleSelection">
-      </birch-standards-picker/>
+      </fs-standards-picker/>
 
       <div class="save-cancel-buttons vertical-center">
         <button id="save-button"
@@ -198,8 +198,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       listeners: {
-        'birch-standards-picker:update-data': '_handleDataChange',
-        'birch-standards-picker:error': '_handleError'
+        'fs-standards-picker:update-data': '_handleDataChange',
+        'fs-standards-picker:error': '_handleError'
       },
 
       ready: function() {
