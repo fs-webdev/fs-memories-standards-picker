@@ -9,7 +9,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../cedar-alert/cedar-alert.html">
+<link rel="import" href="../fs-alert/fs-alert.html">
 <link rel="import" href="../cedar-dialog/cedar-dialog.html">
 <link rel="import" href="../birch-standards-picker/birch-standards-picker.html">
 <link rel="import" href="../wc-i18n/wc-i18n.html">
@@ -51,9 +51,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </div>
     </cedar-dialog>
 
-    <cedar-alert id="alert" alert-type="error" hidden>
+    <fs-alert id="alert" alert-type="error" hidden>
       [[i18n('error')]]
-    </cedar-alert>
+    </fs-alert>
 
     <template is="dom-if" if="[[_same(mode, 'view')]]">
       <div id="view">
