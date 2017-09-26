@@ -20,7 +20,7 @@
   "dependencies": {
     "polymer": "Polymer/polymer#^1.2.0",
     "fs-alert": "fs-webdev/fs-alert#0.2.0",
-    "fs-standards-picker": "fs-webdev/fs-standards-picker#2.x",
+    "birch-standards-picker": "FamilySearchElements/birch-standards-picker#2.x",
     "wc-i18n": "jshcrowthe/wc-i18n#2.x",
     "oak-i18n-behavior": "FamilySearchElements/oak-i18n-behavior#1.x",
     "fs-styles": "fs-webdev/fs-styles#2.x",
