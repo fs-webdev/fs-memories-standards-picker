@@ -69,20 +69,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         test('reset', function() {
           el._disableSaveButton = false;
-          var alertHideSpy = sinon.spy(el.$.alert, 'hide');
+          var callCount = 0;
+          el.$.alert.hide = function() { callCount++; };
 
           el.reset();
           expect(el._disableSaveButton).to.be.true;
-          expect(alertHideSpy.calledOnce).to.be.true;
-
-          alertHideSpy.restore();
+          expect(callCount).to.equal(1);
         });
 
         test('showErrorAlert', function() {
-          var showSpy = sinon.spy(el.$.alert, 'show');
+          var callCount = 0;
+          el.$.alert.show = function() { callCount++; };
           el.showErrorAlert();
-          expect(showSpy.calledOnce).to.be.true;
-          showSpy.restore();
+          expect(callCount).to.equal(1);
         });
 
         // test('_updateArtifact', function() {
@@ -109,7 +108,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           el._disableSaveButton = false;
           eventStub.detail.data = {};
           el._handleDataChange(eventStub);
-          expect(el._disableSaveButton).to.be.true;
+          expect(el._disableSaveButton).to.be.false;
 
           el.mode = 'edit';
           el._disableSaveButton = false;
@@ -119,12 +118,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         });
 
         test('_viewMode', function() {
-          var resetSpy = sinon.spy(el, 'reset');
+          var callCount = 0;
+          el.reset = function() { callCount++; };
           el.mode = 'edit';
           el._viewMode();
           expect(el.mode).to.equal('view');
-          expect(resetSpy.calledOnce).to.be.true;
-          resetSpy.restore();
+          expect(callCount).to.equal(1);
         });
 
         test('_editMode', function() {
@@ -198,8 +197,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         });
 
         test('_handleError', function() {
-          var closeDialogSpy = sinon.spy(el.$.confirmationDialog, 'close');
-          var showAlertSpy = sinon.spy(el, 'showErrorAlert');
+          var callCount = 0;
+          el.$.confirmationDialog.close = function() { callCount++; };
+          var alertCount = 0;
+          el.showErrorAlert = function() { alertCount++; };
           el.loading = true;
           el.$.confirmDeleteButton.disabled = true;
           el.$.confirmDeleteButton.loading = true;
@@ -208,11 +209,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           expect(el.loading).to.be.false;
           expect(el.$.confirmDeleteButton.disabled).to.be.false;
           expect(el.$.confirmDeleteButton.loading).to.be.false;
-          expect(closeDialogSpy.calledOnce).to.be.true;
-          expect(showAlertSpy.calledOnce).to.be.true;
-
-          closeDialogSpy.restore();
-          showAlertSpy.restore();
+          expect(callCount).to.equal(1);
+          expect(alertCount).to.equal(1);
         });
 
         test('_handleSaveSuccess', function() {
