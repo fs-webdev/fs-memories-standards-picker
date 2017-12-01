@@ -13,12 +13,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
     <title>fs-memories-standards-picker Demo</title>
-    <link rel="stylesheet" href="../../../components/fs-styles/dist/base.min.css">
+    <link rel="stylesheet" href="../../../components/fs-styles/dist/familysearch-styles.min.css">
     <script src="../../es6-promise-polyfill/promise.min.js"></script>
     <script src="../../fetch/fetch.js"></script>
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../qa-shared-mock-json/tree-data/authorities/date-en-get-200.json"></script>
+    <script src="../../qa-shared-mock-json/tree-data/authorities/place-en-get-200.json"></script>
     <script>
       window.Polymer = { dom: 'shadow' };
+      FS = {};
     </script>
     <script src="../../sinonjs/sinon.js"></script>
     <script>
@@ -26,7 +29,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        * This setup is necessary to overcome timing issues in firefox, safari, and IE11.
        * Chrome works fine.
        */
-       
+
       var count = 0;
       var dateData;
       var placeData;
