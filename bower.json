@@ -18,28 +18,50 @@
     "/test/"
   ],
   "dependencies": {
-    "polymer": "Polymer/polymer#^1.2.0",
-    "fs-alert-el": "fs-webdev/fs-alert-el#2.x",
+    "polymer": "Polymer/polymer#1.9 - 2",
+    "fs-alert-el": "fs-webdev/fs-alert-el#3.x",
     "birch-standards-picker": "fs-webdev/birch-standards-picker#2.x",
     "wc-i18n": "jshcrowthe/wc-i18n#2.x",
     "oak-i18n-behavior": "fs-webdev/oak-i18n-behavior#1.x",
     "fs-styles": "fs-webdev/fs-styles#3.x",
     "styles-wc": "fs-webdev/styles-wc#2.x",
-    "iron-ajax": "1.x",
+    "iron-ajax": "PolymerElements/iron-ajax#2.x",
     "oak-ajax-behavior": "fs-webdev/oak-ajax-behavior#1.x",
-    "cedar-dialog": "FamilySearchElements/cedar-dialog#adding-dialog",
+    "paper-dialog": "PolymerElements/paper-dialog#^2.0.0",
     "fs-metrics": "fs-webdev/fs-metrics#1.x"
   },
   "devDependencies": {
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.2",
     "fetch-mock": "https://unpkg.com/fetch-mock@5.5.0/es5/client-browserified.js",
-    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
-    "web-component-tester": "^6.2.0"
+    "iron-component-page": "PolymerElements/iron-component-page#^2.0.0",
+    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^2.0.0",
+    "web-component-tester": "^6.4.1",
+    "qa-shared-mock-json": "fs-eng/qa-shared-mock-json",
+    "es6-promise-polyfill": "^1.2.0"
   },
   "resolutions": {
     "fs-styles": "3.x",
-    "polymer": "^1.2.0",
     "wc-i18n": "^2.0.1",
-    "webcomponentsjs": "^v1.0.2",
-    "fetch": "~2.0.3"
+    "webcomponentsjs": "^1.0.2",
+    "fetch": "~2.0.3",
+    "promise-polyfill": "^2.0.0"
+  },
+  "variants": {
+    "1.x": {
+      "dependencies": {
+        "polymer": "Polymer/polymer#^1.9",
+        "iron-ajax": "1.x",
+        "fs-alert-el": "fs-webdev/fs-alert-el#2.x"
+      },
+      "devDependencies": {
+        "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+        "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^1.0.0",
+        "web-component-tester": "^4.0.0",
+        "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
+      },
+      "resolutions": {
+        "webcomponentsjs": "^0.7.0"
+      }
+    }
   }
 }
