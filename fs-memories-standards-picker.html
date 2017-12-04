@@ -10,7 +10,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../fs-alert-el/fs-alert-el.html">
-<link rel="import" href="../cedar-dialog/cedar-dialog.html">
+<link rel="import" href="../paper-dialog/paper-dialog.html">
 <link rel="import" href="../birch-standards-picker/birch-standards-picker.html">
 <link rel="import" href="../wc-i18n/wc-i18n.html">
 <link rel="import" href="../fs-styles/fs-styles.html">
@@ -26,9 +26,198 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <dom-module id="fs-memories-standards-picker">
-  <style include='fs-styles'></style>
-  <link rel="import" type="css" href="fs-memories-standards-picker.css">
   <template>
+    <style include='fs-styles'>
+      :host {
+        display: block;
+        box-sizing: border-box;
+        font-family: Verdana, sans-serif;
+        font-size: 12px;
+        max-width: 300px;
+      }
+      birch-standards-picker {
+        margin-bottom: 10px;
+        padding: 5px 3.5px;
+        padding: 0.35rem 0.25rem;
+      }
+      .display-text {
+        font-size: 14px;
+      }
+      .top {
+        width: 100%;
+        display: flex;
+        display: -webkit-flex;
+        flex-flow: row nowrap;
+      }
+      .top .flex-item {
+        flex: 0 1 auto;
+      }
+      .top .flex-item:nth-child(1) {
+        flex: 1;
+      }
+      .vertical-center {
+        padding: 8.5px 5px 0;
+        padding: 0.531rem 0.25rem 0;
+      }
+      button {
+        font-size: 14px !important;
+      }
+      .add-button {
+        padding: 0px 0 0 3px;
+      }
+      .add-button:hover {
+        text-decoration: none;
+      }
+      .add-button-text {
+        position: relative;
+        top: -3px;
+      }
+      .add-button:hover .add-button-text {
+        text-decoration: underline;
+      }
+      .edit-delete-button {
+        font-size: 12px !important;
+        padding: 8.5px 5px;
+        padding: 0.531rem 0.25rem 0;
+      }
+      .save-cancel-buttons button {
+        margin: 0 0 20px 0 !important;
+      }
+      #save-button {
+        margin-bottom: 25px !important;
+      }
+
+      #confirmationDialog {
+        display: block;
+        background: #ffffff;
+        color: #212121;
+        -webkit-font-smoothing: antialiased;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 20px;
+        box-shadow: 0 0 4px 0 rgba(0,0,0,.35), 0 3px 2px 0 rgba(0,0,0,.18);
+        width: 90%;
+        border-radius: 4px;
+        padding: 15px;
+        margin: 0 10px;
+        z-index: 1000;
+        font-family: Verdana, sans-serif;
+        outline: none;
+        box-sizing: border-box;
+        max-width: 500px;
+        max-height: 247px;
+      }
+
+      #confirmationDialog:after, #confirmationDialog:before {
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+        right: initial;
+        top: initial;
+      }
+      #confirmationDialog.far-right.far-right-top:before, #confirmationDialog.far-left.far-left-top:before {
+        top: 5px;
+      }
+      #confirmationDialog.far-left.far-left-top:after, #confirmationDialog.far-right.far-right-top:after {
+        top: 2px;
+      }
+      #confirmationDialog.far-right.far-right-bottom:before, #confirmationDialog.far-left.far-left-bottom:before {
+        bottom: 4px;
+      }
+      #confirmationDialog.far-right.far-right-bottom:after, #confirmationDialog.far-left.far-left-bottom:after {
+        bottom: 1px;
+      }
+      #confirmationDialog.bottom.bottom-left:before, #confirmationDialog.top.top-left:before {
+        left: 8px;
+      }
+      #confirmationDialog.bottom.bottom-left:after, #confirmationDialog.top.top-left:after {
+        left: 5px;
+      }
+      #confirmationDialog.bottom.bottom-right:before, #confirmationDialog.top.top-right:before {
+        right: 8px;
+      }
+      #confirmationDialog.bottom.bottom-right:after, #confirmationDialog.top.top-right:after  {
+        right: 5px;
+      }
+      #confirmationDialog.far-right:before {
+        border-color: rgba(194,225,245,0);
+        border-left-color: #aaa;
+        border-width: 11px;
+        left: 100%;
+      }
+
+      #confirmationDialog.far-right:after {
+        border-color: rgba(136,183,213,0);
+        border-left-color: #fff;
+        right: -24px;
+        border-width: 14px;
+      }
+
+      #confirmationDialog.far-left:before {
+        border-color: rgba(194,225,245,0);
+        border-right-color: #aaa;
+        border-width: 11px;
+        right: 100%;
+        bottom: 9px;
+      }
+
+      #confirmationDialog.far-left:after {
+        border-color: rgba(136,183,213,0);
+        border-right-color: #fff;
+        border-width: 14px;
+        left: -24px;
+        bottom: 6px;
+      }
+      #confirmationDialog.bottom:before {
+        border-color: rgba(194,225,245,0);
+        border-top-color: #aaa;
+        border-width: 11px;
+        bottom: -23px;
+      }
+
+      #confirmationDialog.bottom:after {
+        border-color: rgba(136,183,213,0);
+        border-top-color: #fff;
+        border-width: 14px;
+        bottom: -25px;
+      }
+
+      #confirmationDialog.top:before {
+        border-color: rgba(194,225,245,0);
+        border-bottom-color: #aaa;
+        border-width: 11px;
+        top: -22px;
+      }
+
+      #confirmationDialog.top:after {
+        border-color: rgba(136,183,213,0);
+        border-bottom-color: #fff;
+        border-width: 14px;
+        top: -24px;
+      }
+      .btn-container {
+        display: flex;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        flex-direction: column;
+        -ms-flex-direction: column;
+        -webkit-flex-direction: column;
+        -webkit-justify-content: center;
+        justify-content: center;
+      }
+      .wrap {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100%;
+        height: 100%;
+      }
+      fs-dialog__close:hover {
+        cursor: pointer;
+      }
+    </style>
 
     <iron-ajax id="req"
       bubbles
@@ -39,17 +228,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       on-error="_handleError">
     </iron-ajax>
 
-    <cedar-dialog id='confirmationDialog'>
-      <h4 modal-title>[[_getDeleteConfirmationTitle(i18n, standardType)]]</h4>
-      <div class='btn-container layout vertical center-justified'>
-        <button id="confirmDeleteButton" is="fs-button" option="destructive" on-tap='_handleDelete'>
-          [[i18n('delete')]]
-        </button>
-        <button is="fs-button" option="minor" dialog-dismiss>
-          [[i18n('cancel')]]
-        </button>
+    <paper-dialog id='confirmationDialog' position-target="[[positionTarget]]" vertical-align="[[verticalAlign]]" vertical-offset="[[_verticalOffset]]" horizontal-align="[[horizontalAlign]]" horizontal-offset="[[_horizontalOffset]]" dynamic-align no-overlap>
+      <div id="modal-content-wrap" class="wrap">
+        <h4 modal-title>[[_getDeleteConfirmationTitle(i18n, standardType)]]</h4>
+        <button class="fs-dialog__close" aria-label="Close modal" dialog-dismiss></button>
+        <div class='btn-container layout vertical center-justified'>
+          <button id="confirmDeleteButton" is="fs-button" option="destructive" on-tap='_handleDelete'>
+            [[i18n('delete')]]
+          </button>
+          <button is="fs-button" option="minor" dialog-dismiss>
+            [[i18n('cancel')]]
+          </button>
+        </div>
       </div>
-    </cedar-dialog>
+    </paper-dialog>
 
     <fs-alert-el id="alert" alert-type="error" hidden>
       [[i18n('error')]]
@@ -194,6 +386,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         _disableSaveButton: {
           type: Boolean,
           value: true
+        },
+        positionTarget: {
+          type: Object
+        },
+        _horizontalOffset: {
+          type: Number
+        },
+        _verticalOffset: {
+          type: Number,
+          value: 12
+        },
+        verticalAlign: {
+          type: String
+        },
+        horizontalAlign: {
+          type: String
         }
       },
 
@@ -204,6 +412,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       ready: function() {
         this._handleArtifactChange(this.artifact);
+        if (!this.verticalAlign) this.verticalAlign = "auto";
+        this.listen(window, 'resize', '_debounceUpdateArrow');
+        this.listen(window, 'orientationchange', '_debounceUpdateArrow');
       },
 
       reset: function() {
@@ -419,11 +630,83 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.fire('fs-memories-standards-picker:update-artifact', {artifact: this.artifact});
         console.log(this.artifact);
       },
-
-      _showDeleteConfirmation: function(e) {
-        this.$.confirmationDialog.open(e);
+      _showDeleteConfirmation: function(event) {
+        if (this.$.confirmationDialog.opened) return;
+        if (event) {
+          this.positionTarget = event.currentTarget;
+        }
+        this.listen(this.$.confirmationDialog, 'iron-overlay-opened', '_updateArrow');
+        this.$.confirmationDialog.open();
       },
+      _debounceUpdateArrow: function(){
+        this.debounce('arrow-debounce', function(){
+          this._updateArrow();
+        }, 200);
+      },
+      _updateArrow: function() {
+        if (!this.positionTarget || !this.$.confirmationDialog) return;
+        this._resetValues(this.$.confirmationDialog);
+        var pt = this.positionTarget.getBoundingClientRect();
+        var modal = this.$.confirmationDialog.getBoundingClientRect();
 
+        var horizontalPosition;
+        var verticalPosition;
+        var modalLeftRightSide = window.innerWidth - modal.left - modal.width;
+        var ptLeftRightSide = window.innerWidth - pt.left - pt.width;
+
+        if (modal.left > (pt.left + pt.width) ) {
+          horizontalPosition = 'far-left';
+        } else if ( Math.abs(modal.left - pt.left) < 50) {
+          horizontalPosition = 'left';
+        } else if ( Math.abs(modalLeftRightSide - ptLeftRightSide) < 50) {
+          horizontalPosition = 'right';
+        } else if (modalLeftRightSide > (ptLeftRightSide + pt.width)) {
+          horizontalPosition = 'far-right';
+        } else { return; }
+        verticalPosition = (Math.abs(pt.top - modal.top) < 50 ) ? "top" : "bottom";
+
+        if (horizontalPosition.indexOf("far") > -1) {
+          this.$.confirmationDialog.classList.add(horizontalPosition);
+          this.$.confirmationDialog.classList.add(horizontalPosition + "-" + verticalPosition);
+          this._horizontalOffset = 12;
+          this._verticalOffset = 0;
+        } else {
+          //Correct for vertical offset created by arrow
+          if ((this.verticalAlign == "top" || this.verticalAlign == undefined || this.verticalAlign == "auto") && window.innerHeight - modal.bottom < 24) verticalPosition = "bottom"
+          else if (this.verticalAlign == "bottom" && modal.top < 24) verticalPosition = "top";
+
+          this.$.confirmationDialog.classList.add(verticalPosition);
+          this.$.confirmationDialog.classList.add(verticalPosition + "-" + horizontalPosition);
+          this._verticalOffset = 12;
+          this._horizontalOffset = 0;
+        }
+        this.$.confirmationDialog.refit();
+
+        if (Math.abs(modal.left - this.$.confirmationDialog.getBoundingClientRect().left) > 70 && this.$.confirmationDialog.opened) {
+          this._removePositionClasses();
+          this._verticalOffset = 15;
+          this._horizontalOffset = 0;
+          this.$.confirmationDialog.refit();
+        }
+      },
+      _removePositionClasses: function() {
+        var removeList = [];
+        var modal = this.$.confirmationDialog;
+        for (i = 0; i < modal.classList.length; i++) {
+          if ( (modal.classList[i].indexOf("left") + modal.classList[i].indexOf("right") + modal.classList[i].indexOf("top") + modal.classList[i].indexOf("bottom") + 3 ) > -1 ) {
+            removeList.push(modal.classList[i]);
+          }
+        }
+        removeList.forEach(function(item){
+          modal.classList.remove(item)
+        });
+      },
+      _resetValues: function(confirmationDialog) {
+        this._removePositionClasses();
+        this._verticalOffset = 0;
+        this._horizontalOffset = 0;
+        this.$.confirmationDialog.refit();
+      },
       _handleDelete: function(e) {
         if(!this.artifact.id
           || this.$.confirmDeleteButton.disabled
