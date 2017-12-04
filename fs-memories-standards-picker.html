@@ -387,9 +387,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           type: Boolean,
           value: true
         },
-        /**
-         * (Optional). For a positioned, non-modal dialog, you can simply pass in the click event object into the open() method to set the target that the dialog is positioned around. However, if you want to set a custom target to position the dialog on, pass the target element into this property.
-         */
         positionTarget: {
           type: Object
         },
@@ -633,10 +630,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.fire('fs-memories-standards-picker:update-artifact', {artifact: this.artifact});
         console.log(this.artifact);
       },
-
-      /**
-       * An interface method to open the modal. The argument 'event' can be used on positioned, non-modal dialog. This object will be used to identify the click target element, which will be used to position the dialog around.
-       */
       _showDeleteConfirmation: function(event) {
         if (this.$.confirmationDialog.opened) return;
         if (event) {
