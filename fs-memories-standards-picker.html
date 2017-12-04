@@ -636,9 +636,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           this.positionTarget = event.currentTarget;
         }
         this.listen(this.$.confirmationDialog, 'iron-overlay-opened', '_updateArrow');
-        // if (this.mobile) {
-        //   this._updateInnerHeight();
-        // }
         this.$.confirmationDialog.open();
       },
       _debounceUpdateArrow: function(){
@@ -647,7 +644,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }, 200);
       },
       _updateArrow: function() {
-        // if (this.$.confirmationDialog.opened) this._ght();
         if (!this.positionTarget || !this.$.confirmationDialog) return;
         this._resetValues(this.$.confirmationDialog);
         var pt = this.positionTarget.getBoundingClientRect();
