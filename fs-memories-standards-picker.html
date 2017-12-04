@@ -668,7 +668,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           horizontalPosition = 'far-right';
         } else { return; }
         verticalPosition = (Math.abs(pt.top - modal.top) < 50 ) ? "top" : "bottom";
-          debugger;
+
         if (horizontalPosition.indexOf("far") > -1) {
           this.$.confirmationDialog.classList.add(horizontalPosition);
           this.$.confirmationDialog.classList.add(horizontalPosition + "-" + verticalPosition);
@@ -685,7 +685,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           this._horizontalOffset = 0;
         }
         this.$.confirmationDialog.refit();
-        debugger;
+
         if (Math.abs(modal.left - this.$.confirmationDialog.getBoundingClientRect().left) > 70 && this.$.confirmationDialog.opened) {
           this._removePositionClasses();
           this._verticalOffset = 15;
