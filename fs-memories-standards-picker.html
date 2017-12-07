@@ -216,6 +216,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       fs-dialog__close:hover {
         cursor: pointer;
       }
+      [hidden] {
+        display: none !important;
+      }
     </style>
 
     <iron-ajax id="req"
@@ -311,7 +314,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <button id="save-button"
           class="fs-button fs-button--recommended"
           on-tap="_handleSave"
-          loading="[[loading]]"
           disabled$="[[_disableSaveButton]]">
           [[i18n('save')]]
         </button>
@@ -352,11 +354,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         standardType: {
           type: String,
           value: 'date'
-        },
-
-        loading: {
-          type: Boolean,
-          value: false
         },
 
         _data: {
@@ -557,7 +554,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var picker = this.$$('#picker');
 
         this._disableSaveButton = true;
-        this.loading = true;
+        if (this.$$('#save-button')) {
+          this.$$('#save-button').classList.add('fs-button--loading');
+        }
         if(picker){
           picker.$.typeahead.$.input.disabled = true;
 
@@ -581,7 +580,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       _handleSuccess: function(e) {
-        this.loading = false;
+        if (this.$$('#save-button')) {
+          this.$$('#save-button').classList.remove('fs-button--loading');
+        }
         var picker = this.$$('#picker');
         if(picker){
           this.$$('#picker').$.typeahead.$.input.disabled = false;
@@ -596,9 +597,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _handleError: function(e) {
         this.$.confirmDeleteButton.disabled = false;
-        this.$.confirmDeleteButton.loading = false;
+        this.$.confirmDeleteButton.classList.remove('fs-button--loading');
         this.$.confirmationDialog.close();
-        this.loading = false;
+        if (this.$$('#save-button')) {
+          this.$$('#save-button').classList.remove('fs-button--loading');
+        }
         var picker = this.$$('#picker');
         if(picker){
           picker.$.typeahead.$.input.disabled = false;
@@ -607,7 +610,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       _handleSaveSuccess: function(e) {
-        this.loading = false;
+        if (this.$$('#save-button')) {
+          this.$$('#save-button').classList.remove('fs-button--loading');
+        }
 
         var picker = this.$$('#picker');
         if(picker){
@@ -619,7 +624,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         this._updateArtifact(this._data);
         this.fire('fs-memories-standards-picker:update-artifact', {artifact: this.artifact});
-        console.log(this.artifact);
       },
       _showDeleteConfirmation: function(event) {
         if (this.$.confirmationDialog.opened) return;
@@ -706,7 +710,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
 
         this.$.confirmDeleteButton.disabled = true;
-        this.$.confirmDeleteButton.loading = true;
+        this.$.confirmDeleteButton.classList.remove('fs-button--loading');
 
         this._ajaxMethod = 'DELETE';
         this.$.req.body = {};
@@ -715,9 +719,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _handleDeleteSuccess: function(e) {
         this.$.confirmDeleteButton.disabled = false;
-        this.$.confirmDeleteButton.loading = false;
+        this.$.confirmDeleteButton.classList.remove('fs-button--loading');
         this.$.confirmationDialog.close();
-        this.loading = false;
+        if (this.$$('#save-button')) {
+          this.$$('#save-button').classList.remove('fs-button--loading');
+        }
 
         this._data = {};
         this._disableSaveButton = true;
