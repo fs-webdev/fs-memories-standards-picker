@@ -20,11 +20,10 @@
   "dependencies": {
     "polymer": "Polymer/polymer#1.9 - 2",
     "fs-alert-el": "fs-webdev/fs-alert-el#3.x",
-    "birch-standards-picker": "fs-webdev/birch-standards-picker#2.x",
+    "birch-standards-picker": "fs-webdev/birch-standards-picker#^2.8.4",
     "wc-i18n": "jshcrowthe/wc-i18n#2.x",
     "oak-i18n-behavior": "fs-webdev/oak-i18n-behavior#1.x",
     "fs-styles": "fs-webdev/fs-styles#3.x",
-    "styles-wc": "fs-webdev/styles-wc#2.x",
     "iron-ajax": "PolymerElements/iron-ajax#2.x",
     "oak-ajax-behavior": "fs-webdev/oak-ajax-behavior#1.x",
     "paper-dialog": "PolymerElements/paper-dialog#^2.0.0",
