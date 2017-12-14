@@ -20,7 +20,7 @@
   "dependencies": {
     "polymer": "Polymer/polymer#1.9 - 2",
     "fs-alert-el": "fs-webdev/fs-alert-el#3.x",
-    "birch-standards-picker": "fs-webdev/birch-standards-picker#2.x",
+    "birch-standards-picker": "fs-webdev/birch-standards-picker#^2.8.4",
     "wc-i18n": "jshcrowthe/wc-i18n#2.x",
     "oak-i18n-behavior": "fs-webdev/oak-i18n-behavior#1.x",
     "fs-styles": "fs-webdev/fs-styles#3.x",
@@ -34,7 +34,7 @@
     "fetch-mock": "https://unpkg.com/fetch-mock@5.5.0/es5/client-browserified.js",
     "iron-component-page": "PolymerElements/iron-component-page#^2.0.0",
     "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^2.0.0",
-    "web-component-tester": "^6.0.0",
+    "web-component-tester": "^6.2.0",
     "qa-shared-mock-json": "fs-eng/qa-shared-mock-json",
     "es6-promise-polyfill": "^1.2.0"
   },

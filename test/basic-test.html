@@ -169,20 +169,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         // });
 
         test('_handleSuccess', function() {
+          el.loading = true;
           el_disableSaveButton = false;
           el._ajaxMethod = 'PUT';
           var saveSuccessSpy = sinon.spy(el, '_handleSaveSuccess');
           var deleteSuccessSpy = sinon.spy(el, '_handleDeleteSuccess');
 
           el._handleSuccess();
+          expect(el.loading).to.be.false;
           expect(saveSuccessSpy.calledOnce).to.be.true;
           expect(deleteSuccessSpy.called).to.be.false;
 
           saveSuccessSpy.reset();
           deleteSuccessSpy.reset();
 
+          el.loading = true;
           el._ajaxMethod = 'DELETE';
           el._handleSuccess();
+          expect(el.loading).to.be.false;
           expect(deleteSuccessSpy.calledOnce).to.be.true;
           expect(saveSuccessSpy.called).to.be.false;
           saveSuccessSpy.restore();
@@ -197,19 +201,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           el.$.confirmationDialog.close = function() { callCount++; };
           var alertCount = 0;
           el.showErrorAlert = function() { alertCount++; };
+          el.loading = true;
           el.$.confirmDeleteButton.disabled = true;
+          el.$.confirmDeleteButton.loading = true;
 
           el._handleError();
+          expect(el.loading).to.be.false;
           expect(el.$.confirmDeleteButton.disabled).to.be.false;
+          expect(el.$.confirmDeleteButton.loading).to.be.false;
           expect(callCount).to.equal(1);
           expect(alertCount).to.equal(1);
         });
 
         test('_handleSaveSuccess', function() {
+          el.loading = true;
           el._disableSaveButton = false;
           el.mode = 'edit';
 
           el._handleSaveSuccess();
+          expect(el.loading).to.be.false;
           expect(el._disableSaveButton).to.be.true;
           expect(el.mode).to.equal('view');
         });
@@ -244,6 +254,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           el.mode = 'view';
           el._handleDelete();
           expect(el.$.confirmDeleteButton.disabled).to.be.true;
+          expect(el.$.confirmDeleteButton.loading).to.be.true;
           expect(el._ajaxMethod).to.equal('DELETE');
           expect(Object.keys(el.$.req.body).length).to.equal(0);
           expect(generateRequestSpy.calledOnce).to.be.true;
@@ -253,16 +264,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         test('_handleDeleteSuccess', function() {
           el.mode = 'edit';
+          el.loading = true;
           el._data = {bogus: 'data'};
           el._disableSaveButton = false;
+          el.$.confirmDeleteButton.loading = true;
           el.$.confirmDeleteButton.disabled = true;
           var closeDialogSpy = sinon.spy(el.$.confirmationDialog, 'close');
 
           el._handleDeleteSuccess();
 
           expect(el.mode).to.equal('view');
+          expect(el.loading).to.be.false;
           expect(Object.keys(el._data).length).to.equal(0);
           expect(el._disableSaveButton).to.be.true;
+          expect(el.$.confirmDeleteButton.loading).to.be.false;
           expect(el.$.confirmDeleteButton.disabled).to.be.false;
           expect(closeDialogSpy.calledOnce).to.be.true;
 
