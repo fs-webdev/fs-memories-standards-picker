@@ -107,96 +107,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         max-height: 247px;
       }
 
-      #confirmationDialog:after, #confirmationDialog:before {
-        border: solid transparent;
-        content: " ";
-        height: 0;
-        width: 0;
-        position: absolute;
-        pointer-events: none;
-        right: initial;
-        top: initial;
-      }
-      #confirmationDialog.far-right.far-right-top:before, #confirmationDialog.far-left.far-left-top:before {
-        top: 5px;
-      }
-      #confirmationDialog.far-left.far-left-top:after, #confirmationDialog.far-right.far-right-top:after {
-        top: 2px;
-      }
-      #confirmationDialog.far-right.far-right-bottom:before, #confirmationDialog.far-left.far-left-bottom:before {
-        bottom: 4px;
-      }
-      #confirmationDialog.far-right.far-right-bottom:after, #confirmationDialog.far-left.far-left-bottom:after {
-        bottom: 1px;
-      }
-      #confirmationDialog.bottom.bottom-left:before, #confirmationDialog.top.top-left:before {
-        left: 8px;
-      }
-      #confirmationDialog.bottom.bottom-left:after, #confirmationDialog.top.top-left:after {
-        left: 5px;
-      }
-      #confirmationDialog.bottom.bottom-right:before, #confirmationDialog.top.top-right:before {
-        right: 8px;
-      }
-      #confirmationDialog.bottom.bottom-right:after, #confirmationDialog.top.top-right:after  {
-        right: 5px;
-      }
-      #confirmationDialog.far-right:before {
-        border-color: rgba(194,225,245,0);
-        border-left-color: #aaa;
-        border-width: 11px;
-        left: 100%;
-      }
-
-      #confirmationDialog.far-right:after {
-        border-color: rgba(136,183,213,0);
-        border-left-color: #fff;
-        right: -24px;
-        border-width: 14px;
-      }
-
-      #confirmationDialog.far-left:before {
-        border-color: rgba(194,225,245,0);
-        border-right-color: #aaa;
-        border-width: 11px;
-        right: 100%;
-        bottom: 9px;
-      }
-
-      #confirmationDialog.far-left:after {
-        border-color: rgba(136,183,213,0);
-        border-right-color: #fff;
-        border-width: 14px;
-        left: -24px;
-        bottom: 6px;
-      }
-      #confirmationDialog.bottom:before {
-        border-color: rgba(194,225,245,0);
-        border-top-color: #aaa;
-        border-width: 11px;
-        bottom: -23px;
-      }
-
-      #confirmationDialog.bottom:after {
-        border-color: rgba(136,183,213,0);
-        border-top-color: #fff;
-        border-width: 14px;
-        bottom: -25px;
-      }
-
-      #confirmationDialog.top:before {
-        border-color: rgba(194,225,245,0);
-        border-bottom-color: #aaa;
-        border-width: 11px;
-        top: -22px;
-      }
-
-      #confirmationDialog.top:after {
-        border-color: rgba(136,183,213,0);
-        border-bottom-color: #fff;
-        border-width: 14px;
-        top: -24px;
-      }
       .btn-container {
         display: flex;
         display: -ms-flexbox;
@@ -227,7 +137,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       on-error="_handleError">
     </iron-ajax>
 
-    <paper-dialog id='confirmationDialog' position-target="[[positionTarget]]" vertical-align="[[verticalAlign]]" vertical-offset="[[_verticalOffset]]" horizontal-align="[[horizontalAlign]]" horizontal-offset="[[_horizontalOffset]]" dynamic-align no-overlap>
+    <paper-dialog id='confirmationDialog' position-target="[[positionTarget]]" vertical-align="[[verticalAlign]]" horizontal-align="[[horizontalAlign]]" dynamic-align no-overlap>
       <div id="modal-content-wrap" class="wrap">
         <h4 modal-title>[[_getDeleteConfirmationTitle(i18n, standardType)]]</h4>
         <button class="fs-dialog__close" aria-label="Close modal" dialog-dismiss></button>
@@ -380,18 +290,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         positionTarget: {
           type: Object
         },
-        _horizontalOffset: {
-          type: Number
-        },
-        _verticalOffset: {
-          type: Number,
-          value: 12
-        },
         verticalAlign: {
-          type: String
+          type: String,
+          value: 'auto'
         },
         horizontalAlign: {
-          type: String
+          type: String,
+          value: 'auto'
         }
       },
 
@@ -402,9 +307,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       ready: function() {
         this._handleArtifactChange(this.artifact);
-        if (!this.verticalAlign) this.verticalAlign = "auto";
-        this.listen(window, 'resize', '_debounceUpdateArrow');
-        this.listen(window, 'orientationchange', '_debounceUpdateArrow');
       },
 
       reset: function() {
@@ -630,77 +532,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         if (event) {
           this.positionTarget = event.currentTarget;
         }
-        this.listen(this.$.confirmationDialog, 'iron-overlay-opened', '_updateArrow');
-        this.$.confirmationDialog.open();
-      },
-      _debounceUpdateArrow: function(){
-        this.debounce('arrow-debounce', function(){
-          this._updateArrow();
-        }, 200);
-      },
-      _updateArrow: function() {
-        if (!this.positionTarget || !this.$.confirmationDialog) return;
-        this._resetValues(this.$.confirmationDialog);
-        var pt = this.positionTarget.getBoundingClientRect();
-        var modal = this.$.confirmationDialog.getBoundingClientRect();
-
-        var horizontalPosition;
-        var verticalPosition;
-        var modalLeftRightSide = window.innerWidth - modal.left - modal.width;
-        var ptLeftRightSide = window.innerWidth - pt.left - pt.width;
-
-        if (modal.left > (pt.left + pt.width) ) {
-          horizontalPosition = 'far-left';
-        } else if ( Math.abs(modal.left - pt.left) < 50) {
-          horizontalPosition = 'left';
-        } else if ( Math.abs(modalLeftRightSide - ptLeftRightSide) < 50) {
-          horizontalPosition = 'right';
-        } else if (modalLeftRightSide > (ptLeftRightSide + pt.width)) {
-          horizontalPosition = 'far-right';
-        } else { return; }
-        verticalPosition = (Math.abs(pt.top - modal.top) < 50 ) ? "top" : "bottom";
-
-        if (horizontalPosition.indexOf("far") > -1) {
-          this.$.confirmationDialog.classList.add(horizontalPosition);
-          this.$.confirmationDialog.classList.add(horizontalPosition + "-" + verticalPosition);
-          this._horizontalOffset = 12;
-          this._verticalOffset = 0;
-        } else {
-          //Correct for vertical offset created by arrow
-          if ((this.verticalAlign == "top" || this.verticalAlign == undefined || this.verticalAlign == "auto") && window.innerHeight - modal.bottom < 24) verticalPosition = "bottom"
-          else if (this.verticalAlign == "bottom" && modal.top < 24) verticalPosition = "top";
-
-          this.$.confirmationDialog.classList.add(verticalPosition);
-          this.$.confirmationDialog.classList.add(verticalPosition + "-" + horizontalPosition);
-          this._verticalOffset = 12;
-          this._horizontalOffset = 0;
-        }
-        this.$.confirmationDialog.refit();
-
-        if (Math.abs(modal.left - this.$.confirmationDialog.getBoundingClientRect().left) > 70 && this.$.confirmationDialog.opened) {
-          this._removePositionClasses();
-          this._verticalOffset = 15;
-          this._horizontalOffset = 0;
-          this.$.confirmationDialog.refit();
-        }
-      },
-      _removePositionClasses: function() {
-        var removeList = [];
-        var modal = this.$.confirmationDialog;
-        for (i = 0; i < modal.classList.length; i++) {
-          if ( (modal.classList[i].indexOf("left") + modal.classList[i].indexOf("right") + modal.classList[i].indexOf("top") + modal.classList[i].indexOf("bottom") + 3 ) > -1 ) {
-            removeList.push(modal.classList[i]);
-          }
-        }
-        removeList.forEach(function(item){
-          modal.classList.remove(item)
-        });
-      },
-      _resetValues: function(confirmationDialog) {
-        this._removePositionClasses();
-        this._verticalOffset = 0;
-        this._horizontalOffset = 0;
-        this.$.confirmationDialog.refit();
+        this.$.confirmationDialog.open(event.currentTarget);
       },
       _handleDelete: function(e) {
         if(!this.artifact.id
