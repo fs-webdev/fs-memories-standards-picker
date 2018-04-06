@@ -10,7 +10,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../fs-alert-el/fs-alert-el.html">
-<link rel="import" href="../paper-dialog/paper-dialog.html">
+<link rel="import" href="../fs-dialog/fs-anchored-dialog.html">
 <link rel="import" href="../birch-standards-picker/birch-standards-picker.html">
 <link rel="import" href="../wc-i18n/wc-i18n.html">
 <link rel="import" href="../fs-styles/fs-styles.html">
@@ -87,24 +87,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       #confirmationDialog {
-        display: block;
-        background: #ffffff;
-        color: #212121;
-        -webkit-font-smoothing: antialiased;
-        font-size: 14px;
-        font-weight: 400;
-        line-height: 20px;
-        box-shadow: 0 0 4px 0 rgba(0,0,0,.35), 0 3px 2px 0 rgba(0,0,0,.18);
-        width: 90%;
-        border-radius: 4px;
-        padding: 15px;
-        margin: 0 10px;
-        z-index: 1000;
-        font-family: Verdana, sans-serif;
-        outline: none;
-        box-sizing: border-box;
         max-width: 500px;
-        max-height: 247px;
       }
 
       .btn-container {
@@ -137,20 +120,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       on-error="_handleError">
     </iron-ajax>
 
-    <paper-dialog id='confirmationDialog' position-target="[[positionTarget]]" vertical-align="[[verticalAlign]]" horizontal-align="[[horizontalAlign]]" dynamic-align no-overlap>
-      <div id="modal-content-wrap" class="wrap">
+    <fs-anchored-dialog id='confirmationDialog'>
+      <header>
         <h4 modal-title>[[_getDeleteConfirmationTitle(i18n, standardType)]]</h4>
-        <button class="fs-dialog__close" aria-label="Close modal" dialog-dismiss></button>
-        <div class='btn-container layout vertical center-justified'>
-          <button id="confirmDeleteButton" class="fs-button fs-button--destructive" on-tap='_handleDelete'>
-            [[i18n('delete')]]
-          </button>
-          <button class="fs-button fs-button--minor" dialog-dismiss>
-            [[i18n('cancel')]]
-          </button>
-        </div>
-      </div>
-    </paper-dialog>
+      </header>
+      <footer>
+        <button
+          id="confirmDeleteButton"
+          class="fs-button fs-button--destructive"
+          on-tap='_handleDelete'
+          data-dialog-dismiss>
+          [[i18n('delete')]]
+        </button>
+        <button
+          class="fs-button fs-button--minor"
+          data-dialog-dismiss>
+          [[i18n('cancel')]]
+        </button>
+      </footer>
+    </fs-modal-dialog>
 
     <fs-alert-el id="alert" alert-type="error" hidden>
       [[i18n('error')]]
@@ -532,7 +520,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         if (event) {
           this.positionTarget = event.currentTarget;
         }
-        this.$.confirmationDialog.open(event.currentTarget);
+        this.$.confirmationDialog.open({attachToElement: event.currentTarget});
       },
       _handleDelete: function(e) {
         if(!this.artifact.id
