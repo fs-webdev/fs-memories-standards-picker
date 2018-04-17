@@ -160,7 +160,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <small class="flex-item vertical-center">|</small>
 
             <button
-              on-click="_showDeleteConfirmation"
+              on-tap="_showDeleteConfirmation"
               class="flex-item edit-delete-button fs-button fs-button--minor">
               [[i18n('delete')]]
             </button>
@@ -201,7 +201,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         data="[[_data]]"
         search-term="[[_getText(_data)]]"
         standard-type="[[standardType]]"
-        on-birch-typeahead:input="_handleInput"
         on-birch-typeahead:selected="_handleSelection">
       </birch-standards-picker/>
 
@@ -441,10 +440,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         if(picker){
           picker.hideStandardsDropdown = false;
         }
-      },
-
-      _handleInput: function(e) {
-        this._disableSaveButton = true;
       },
 
       _handleSave: function(e) {
