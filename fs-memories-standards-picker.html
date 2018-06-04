@@ -485,6 +485,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       _handleError: function(e) {
+        if(e.detail.status === 400) return;
         this.$.confirmDeleteButton.disabled = false;
         this.$.confirmDeleteButton.loading = false;
         this.$.confirmationDialog.close();
