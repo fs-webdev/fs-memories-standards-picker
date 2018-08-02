@@ -431,10 +431,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       _handleSelection: function(e) {
         if(!e || !e.detail || !e.detail.selection) return;
         this._disableSaveButton = false;
-        var picker = this.$$('#picker');
-        if(picker){
-          picker.hideStandardsDropdown = false;
-        }
       },
 
       _handleSave: function(e) {
