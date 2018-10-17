@@ -501,7 +501,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var picker = this.$$('#picker');
         if(picker){
           this._data = picker.data;
-          this._data.label = picker.data.label
+          this._data.label = picker.data.label;
+          picker.reset();
         }
         this._disableSaveButton = true;
         this.mode = 'view';
