@@ -37,6 +37,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         trackLink: function() {},
         trackData: function() {}
       };
+
+      FS.i18n = function(key) {return key;}
+
       suite('<fs-memories-standards-picker>', function() {
 
         var el;
@@ -142,12 +145,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           expect(el._hasText({customText: '', standardText: ''})).to.be.false;
         });
 
-        test('_getText', function() {
-          expect(el._getText({customText: 'a', standardText: 'b'})).to.equal('a');
-          expect(el._getText({customText: 'a', standardText: ''})).to.equal('a');
-          expect(el._getText({customText: '', standardText: 'b'})).to.equal('b');
-        });
-
         test('_handleSelection', function() {
           el._disableSaveButton = true;
 
@@ -156,12 +153,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           el._handleSelection({detail: {selection: {}}});
           expect(el._disableSaveButton).to.be.false;
-        });
-
-        test('_handleInput', function() {
-          el._disableSaveButton = false;
-          el._handleInput();
-          expect(el._disableSaveButton).to.be.true;
         });
 
         // test('_handleSave', function() {
@@ -205,7 +196,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           el.$.confirmDeleteButton.disabled = true;
           el.$.confirmDeleteButton.loading = true;
 
-          el._handleError();
+          var e = {detail: {status: 200}};
+          el._handleError(e);
           expect(el.loading).to.be.false;
           expect(el.$.confirmDeleteButton.disabled).to.be.false;
           expect(el.$.confirmDeleteButton.loading).to.be.false;
@@ -226,7 +218,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         test('_showDeleteConfirmation', function() {
           var openConfrimDeleteSpy = sinon.spy(el.$.confirmationDialog, 'open');
-          el._showDeleteConfirmation();
+          var e = {currentTarget: {}};
+          el._showDeleteConfirmation(e);
           expect(openConfrimDeleteSpy.calledOnce).to.be.true;
           openConfrimDeleteSpy.restore();
         });

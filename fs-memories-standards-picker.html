@@ -206,7 +206,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         data="[[_data]]"
         standard-type="[[standardType]]"
         on-birch-typeahead:selected="_handleSelection">
-      </birch-standards-picker/>
+      </birch-standards-picker>
 
       <div class="save-cancel-buttons vertical-center">
         <button id="save-button"
@@ -354,6 +354,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _handleArtifactChange: function(artifact) {
         if(!artifact) return;
+
+        this.mode = 'view';
+
+        var picker = this.$$('#picker');
+        if (picker) {
+          picker.reset();
+        }
+
         var dp;
         if(artifact.datesPlaces && artifact.datesPlaces[0]){
           dp = artifact.datesPlaces[0];
@@ -367,7 +375,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             customText: dp[this.standardType + 'NonStandardizedText'],
             label: dp.label
           };
-          var picker = this.$$('#picker');
+
           if(picker){
             this._data.label = picker.data.label;
           }
