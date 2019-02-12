@@ -46,11 +46,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                            [200, {"Content-Type": "application/json"},
                             JSON.stringify(placeData)]);
 
-        server.respondWith("PUT", /\/artifactmanager\/artifacts*/,
+        server.respondWith("PUT", /\/service\/memories\/manager\/artifacts*/,
                            [200, {"Content-Type": "application/json"},
                             '']);
 
-        server.respondWith("DELETE", /\/artifactmanager\/artifacts*/,
+        server.respondWith("DELETE", /\/service\/memories\/manager\/artifacts*/,
                            [200, {"Content-Type": "application/json"},
                             '']);
       }
