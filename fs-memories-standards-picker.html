@@ -347,6 +347,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
 
         this.artifact = Object.assign({}, this.artifact);
+        // Update the parent view
+        this.fire('artifact-updated', {artifact: this.artifact, type: 'date/place'});
       },
 
       _updateData: function(data) {
