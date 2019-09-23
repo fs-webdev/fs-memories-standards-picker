@@ -291,6 +291,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         horizontalAlign: {
           type: String,
           value: 'auto'
+        },
+        /**
+         * Should update the standards picker modal
+         */
+        updatePickerModal: {
+          type: Boolean,
+          value: false
         }
       },
 
@@ -347,8 +354,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
 
         this.artifact = Object.assign({}, this.artifact);
-        // Update the parent view
-        this.fire('artifact-updated', {artifact: this.artifact, type: 'date/place'});
       },
 
       _updateData: function(data) {
@@ -538,7 +543,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.mode = 'view';
 
         this._updateArtifact(this._data);
-        this.fire('fs-memories-standards-picker:update-artifact', {artifact: this.artifact});
+        this.fire('fs-memories-standards-picker:update-artifact', {artifact: this.artifact, updatePickerModal: this.updatePickerModal});
       },
       _showDeleteConfirmation: function(event) {
         if (this.$.confirmationDialog.opened) return;
