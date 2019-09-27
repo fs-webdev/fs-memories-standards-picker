@@ -589,11 +589,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       _getStandardTypeText: function(i18n, standardType) {
+        if (!i18n) return '';
         return standardType === 'date' ? i18n('event_date') : i18n('event_place');
       },
 
       _getDeleteConfirmationTitle: function(i18n, standardType) {
-        return i18n('confirm_delete_' + standardType + '_title');
+        return i18n ? i18n('confirm_delete_' + standardType + '_title') : '';
       },
 
       _same: function(a, b, c) {
@@ -601,7 +602,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       _getAddText: function(standardType, i18n) {
-        if (!this.i18n('add')) return '';
+        if (!this.i18n || !this.i18n('add')) return '';
         if (standardType == 'place') {
           return this.i18n('add_event_place');
         } else if (standardType == 'date') {
