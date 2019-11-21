@@ -10,7 +10,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../fs-alert-el/fs-alert-el.html">
-<link rel="import" href="../fs-dialog/fs-anchored-dialog.html">
+<link rel="import" href="../fs-dialog/fs-dialog-modal.html">
 <link rel="import" href="../birch-standards-picker/birch-standards-picker.html">
 <link rel="import" href="../wc-i18n/wc-i18n.html">
 <link rel="import" href="../fs-styles/fs-styles.html">
@@ -116,11 +116,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       on-error="_handleError">
     </iron-ajax>
 
-    <fs-anchored-dialog
+    <fs-modal-dialog
       id='confirmationDialog'
-      no-close-button
-      no-fullscreen-mobile
-      forced-pointer-direction="up">
+      no-close-button>
       <header>
         <h4>[[_getDeleteConfirmationTitle(i18n, standardType)]]</h4>
       </header>
@@ -140,7 +138,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           [[i18n('cancel')]]
         </button>
       </footer>
-    </fs-anchored-dialog>
+    </fs-modal-dialog>
 
     <fs-alert-el id="alert" alert-type="error" hidden>
       [[i18n('error')]]
@@ -550,9 +548,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       _showDeleteConfirmation: function(event) {
         if (this.$.confirmationDialog.opened) return;
         if (event) {
-          this.positionTarget = event.currentTarget;
         }
-        this.$.confirmationDialog.open({attachToElement: event.currentTarget});
+        this.$.confirmationDialog.open();
       },
       _handleDelete: function(e) {
         if(!this.artifact.id
