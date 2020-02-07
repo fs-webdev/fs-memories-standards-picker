@@ -1,0 +1,19 @@
+{
+  "add": "Toevoegen",
+  "add_event_data": "Gegevens gebeurtenis toevoegen",
+  "add_event_date": "Datum gebeurtenis toevoegen",
+  "add_event_place": "Plaats gebeurtenis toevoegen",
+  "cancel": "Annuleren",
+  "confirm_delete_date_text": "Weet u zeker dat u de datum van deze gebeurtenis wilt verwijderen?",
+  "confirm_delete_date_title": "Datum gebeurtenis verwijderen?",
+  "confirm_delete_place_text": "Weet u zeker dat u de plaats van deze gebeurtenis wilt verwijderen?",
+  "confirm_delete_place_title": "Plaats gebeurtenis verwijderen?",
+  "delete": "Verwijderen",
+  "edit": "Bewerken",
+  "error": "Er is een fout opgetreden. Probeer het later nog eens.",
+  "event_date": "Datum gebeurtenis",
+  "event_place": "Plaats gebeurtenis",
+  "save": "Opslaan",
+  "unable_to_save_date": "Kan datum gebeurtenis niet opslaan. Probeer het later nog eens.",
+  "unable_to_save_place": "Kan plaats gebeurtenis niet opslaan. Probeer het later nog eens."
+}

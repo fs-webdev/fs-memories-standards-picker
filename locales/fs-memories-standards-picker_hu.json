@@ -1,0 +1,19 @@
+{
+  "add": "Hozzáadás",
+  "add_event_data": "Esemény adatainak hozzáadása",
+  "add_event_date": "Esemény dátumának hozzáadása",
+  "add_event_place": "Esemény helyszínének hozzáadása",
+  "cancel": "Mégsem",
+  "confirm_delete_date_text": "Biztosan törölni kívánod ezt az esemény dátumot?",
+  "confirm_delete_date_title": "Esemény dátumának törlése?",
+  "confirm_delete_place_text": "Biztosan törölni kívánod ezt az esemény helyszínt?",
+  "confirm_delete_place_title": "Esemény helyszínének törlése?",
+  "delete": "Törlés",
+  "edit": "Szerkesztés",
+  "error": "Hiba történt. Kérjük, próbáld meg később!",
+  "event_date": "Esemény dátuma",
+  "event_place": "Esemény helye",
+  "save": "Mentés",
+  "unable_to_save_date": "Esemény adatainak mentése sikertelen. Kérjük, próbáld meg később!",
+  "unable_to_save_place": "Esemény helyszínének mentése sikertelen. Kérjük, próbáld meg később!"
+}
