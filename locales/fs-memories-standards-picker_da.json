@@ -1,0 +1,19 @@
+{
+  "add": "Tilføj",
+  "add_event_data": "Tilføj begivenhedsdata",
+  "add_event_date": "Tilføj begivenhedsdato",
+  "add_event_place": "Tilføj begivenhedssted",
+  "cancel": "Annuller",
+  "confirm_delete_date_text": "Er du sikker på, at du ønsker at slette denne begivenhedsdato?",
+  "confirm_delete_date_title": "Slet begivenhedsdato?",
+  "confirm_delete_place_text": "Er du sikker på, at du ønsker at slette dette begivenhedssted?",
+  "confirm_delete_place_title": "Slet begivenhedssted?",
+  "delete": "Slet",
+  "edit": "Rediger",
+  "error": "Der opstod en fejl. Prøv igen senere.",
+  "event_date": "Dato for begivenhed",
+  "event_place": "Stedet for begivenhed",
+  "save": "Gem",
+  "unable_to_save_date": "Kan ikke gemme begivenhedsdato. Prøv igen senere.",
+  "unable_to_save_place": "Kan ikke gemme begivenhedssted. Prøv igen senere."
+}

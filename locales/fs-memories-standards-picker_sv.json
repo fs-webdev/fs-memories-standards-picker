@@ -1,0 +1,19 @@
+{
+  "add": "Lägg till",
+  "add_event_data": "Lägg till information om händelsen",
+  "add_event_date": "Lägg till händelsedatum",
+  "add_event_place": "Lägg till händelseort",
+  "cancel": "Avbryt",
+  "confirm_delete_date_text": "Är du säker på att du vill radera det här händelsedatumet?",
+  "confirm_delete_date_title": "Radera händelsedatum?",
+  "confirm_delete_place_text": "Är du säker på att du vill radera den här händelseplatsen?",
+  "confirm_delete_place_title": "Radera händelseplats?",
+  "delete": "Radera",
+  "edit": "Redigera",
+  "error": "Ett fel inträffade. Försök igen senare.",
+  "event_date": "Händelsedatum",
+  "event_place": "Händelseort",
+  "save": "Spara",
+  "unable_to_save_date": "Det gick inte att spara händelsedatum. Försök igen senare.",
+  "unable_to_save_place": "Det gick inte att spara händelseort. Försök igen senare."
+}

@@ -1,0 +1,19 @@
+{
+  "add": "加入",
+  "add_event_data": "加入事项资料",
+  "add_event_date": "加入事项日期",
+  "add_event_place": "加入事项地点",
+  "cancel": "取消",
+  "confirm_delete_date_text": "你确定要删除此事项日期？",
+  "confirm_delete_date_title": "删除事项日期？",
+  "confirm_delete_place_text": "你确定要删除此事项地点？",
+  "confirm_delete_place_title": "删除事项地点？",
+  "delete": "删除",
+  "edit": "编辑",
+  "error": "发生错误。请稍后再试。",
+  "event_date": "事项日期",
+  "event_place": "事项地点",
+  "save": "保存",
+  "unable_to_save_date": "无法储存事项日期。请稍后再试。",
+  "unable_to_save_place": "无法储存事项地点。请稍后再试。"
+}

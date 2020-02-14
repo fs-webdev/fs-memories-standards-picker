@@ -1,0 +1,19 @@
+{
+  "add": "Lisää",
+  "add_event_data": "Lisää tapahtuman tiedot",
+  "add_event_date": "Lisää tapahtuman päivämäärä",
+  "add_event_place": "Lisää tapahtuman paikka",
+  "cancel": "Peruuta",
+  "confirm_delete_date_text": "Haluatko varmasti poistaa tämän tapahtuman päivämäärän?",
+  "confirm_delete_date_title": "Poistetaanko tapahtuman päivämäärä?",
+  "confirm_delete_place_text": "Haluatko varmasti poistaa tämän tapahtuman paikan?",
+  "confirm_delete_place_title": "Poistetaanko tapahtuman paikka?",
+  "delete": "Poista",
+  "edit": "Muokkaa",
+  "error": "Tapahtui virhe. Yritä uudestaan myöhemmin.",
+  "event_date": "Tapahtuman päivämäärä",
+  "event_place": "Tapahtuman paikka",
+  "save": "Tallenna",
+  "unable_to_save_date": "Tapahtuman päivämäärän tallentaminen ei onnistunut. Yritä uudestaan myöhemmin.",
+  "unable_to_save_place": "Tapahtuman paikan tallentaminen ei onnistunut. Yritä uudestaan myöhemmin."
+}

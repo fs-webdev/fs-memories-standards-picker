@@ -1,0 +1,19 @@
+{
+  "add": "Přidat",
+  "add_event_data": "Přidat údaje o události",
+  "add_event_date": "Přidat datum události",
+  "add_event_place": "Přidat místo události",
+  "cancel": "Zrušit",
+  "confirm_delete_date_text": "Opravdu chcete smazat datum této události?",
+  "confirm_delete_date_title": "Smazat datum události?",
+  "confirm_delete_place_text": "Opravdu chcete smazat místo této události?",
+  "confirm_delete_place_title": "Smazat místo události?",
+  "delete": "Smazat",
+  "edit": "Upravit",
+  "error": "Došlo k chybě. Zkuste to prosím znovu později.",
+  "event_date": "Datum události",
+  "event_place": "Místo události",
+  "save": "Uložit",
+  "unable_to_save_date": "Datum události nelze uložit. Zkuste to prosím znovu později.",
+  "unable_to_save_place": "Místo události nelze uložit. Zkuste to prosím znovu později."
+}

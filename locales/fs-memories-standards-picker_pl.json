@@ -1,0 +1,19 @@
+{
+  "add": "Dodaj",
+  "add_event_data": "Dodaj dane o wydarzeniu",
+  "add_event_date": "Dodaj datę wydarzenia",
+  "add_event_place": "Dodaj miejsce wydarzenia",
+  "cancel": "Anuluj",
+  "confirm_delete_date_text": "Czy na pewno chcesz usunąć datę tego wydarzenia?",
+  "confirm_delete_date_title": "Czy usunąć datę wydarzenia?",
+  "confirm_delete_place_text": "Czy na pewno chcesz usunąć miejsce tego wydarzenia?",
+  "confirm_delete_place_title": "Czy usunąć miejsce wydarzenia?",
+  "delete": "Usuń",
+  "edit": "Edytuj",
+  "error": "Wystąpił błąd. Spróbuj ponownie później.",
+  "event_date": "Data wydarzenia",
+  "event_place": "Miejsce wydarzenia",
+  "save": "Zapisz",
+  "unable_to_save_date": "Nie można zapisać daty wydarzenia. Spróbuj ponownie później.",
+  "unable_to_save_place": "Nie można zapisać miejsca wydarzenia. Spróbuj ponownie później."
+}
