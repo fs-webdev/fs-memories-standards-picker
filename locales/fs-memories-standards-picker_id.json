@@ -1,0 +1,19 @@
+{
+  "add": "Tambahkan",
+  "add_event_data": "Tambahkan Data Peristiwa",
+  "add_event_date": "Tambahkan Tanggal Peristiwa",
+  "add_event_place": "Tambahkan Tempat Peristiwa",
+  "cancel": "Batalkan",
+  "confirm_delete_date_text": "Apakah Anda yakin ingin menghapus tanggal peristiwa ini?",
+  "confirm_delete_date_title": "Hapus Tanggal Peristiwa?",
+  "confirm_delete_place_text": "Apakah Anda yakin ingin menghapus tempat peristiwa ini?",
+  "confirm_delete_place_title": "Hapus Tempat Peristiwa?",
+  "delete": "Hapus",
+  "edit": "Edit",
+  "error": "Terjadi galat. Silakan coba lagi nanti.",
+  "event_date": "Tanggal Peristiwa",
+  "event_place": "Tempat Peristiwa",
+  "save": "Simpan",
+  "unable_to_save_date": "Tidak Dapat Menyimpan Tanggal Peristiwa. Silakan coba lagi nanti.",
+  "unable_to_save_place": "Tidak dapat Menyimpan Tempat Peristiwa. Silakan coba lagi nanti."
+}
