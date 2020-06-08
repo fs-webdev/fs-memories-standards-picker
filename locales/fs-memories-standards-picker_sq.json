@@ -1,0 +1,19 @@
+{
+  "add": "Shto",
+  "add_event_data": "Shto të Dhënat e Ngjarjes",
+  "add_event_date": "Shto Datën e Ngjarjes",
+  "add_event_place": "Shto Vendin e Ngjarjes",
+  "cancel": "Anuloje",
+  "confirm_delete_date_text": "A jeni i sigurt që dëshironi ta fshini këtë datë të ngjarjes?",
+  "confirm_delete_date_title": "A të Fshihet Data e Ngjarjes?",
+  "confirm_delete_place_text": "A jeni i sigurt që dëshironi ta fshini këtë vend të ngjarjes?",
+  "confirm_delete_place_title": "A të Fshihet Vendi i Ngjarjes?",
+  "delete": "Fshije",
+  "edit": "Redaktoje",
+  "error": "Ndodhi një gabim. Ju lutemi, provojeni sërish më vonë.",
+  "event_date": "Data e Ngjarjes",
+  "event_place": "Vendi i Ngjarjes",
+  "save": "Ruaje",
+  "unable_to_save_date": "E pamundur të ruhet Data e Ngjarjes. Ju lutemi, provojeni sërish më vonë.",
+  "unable_to_save_place": "E pamundur të ruhet Vendi i Ngjarjes. Ju lutemi, provojeni sërish më vonë."
+}

@@ -1,0 +1,19 @@
+{
+  "add": "Adaugă",
+  "add_event_data": "Adaugă informații ale evenimentului",
+  "add_event_date": "Adaugă data evenimentului",
+  "add_event_place": "Adaugă locul evenimentului",
+  "cancel": "Anulează",
+  "confirm_delete_date_text": "Ești sigur că dorești să ștergi data acestui eveniment?",
+  "confirm_delete_date_title": "Dorești să ștergi data evenimentului?",
+  "confirm_delete_place_text": "Ești sigur că dorești să ștergi locul acestui eveniment?",
+  "confirm_delete_place_title": "Dorești să ștergi locul evenimentului?",
+  "delete": "Şterge",
+  "edit": "Redactează",
+  "error": "A apărut o eroare. Te rugăm să încerci din nou mai târziu.",
+  "event_date": "Data evenimentului",
+  "event_place": "Locul evenimentului",
+  "save": "Salvează",
+  "unable_to_save_date": "Nu s-a putut salva data evenimentului. Te rugăm să încerci din nou mai târziu.",
+  "unable_to_save_place": "Nu s-a putut salva locul evenimentului. Te rugăm să încerci din nou mai târziu."
+}

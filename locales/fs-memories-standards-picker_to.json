@@ -1,0 +1,19 @@
+{
+  "add": "Tānaki",
+  "add_event_data": "Tānaki e Fakamatala ki he Meʻa Naʻe Hokó",
+  "add_event_date": "Tānaki e ʻAho ne Hoko Aí ",
+  "add_event_place": "Tānaki e Feituʻu ne Hoko Aí",
+  "cancel": "Kaniseli",
+  "confirm_delete_date_text": "ʻOkú ke fakapapauʻi nai ʻokú ke loto ke tamateʻi ʻa e ʻaho ko ʻeni ne hoko aí?",
+  "confirm_delete_date_title": "Tamateʻi e ʻAho ne Hoko aí?",
+  "confirm_delete_place_text": "ʻOkú ke fakapapauʻi nai ʻokú ke loto ke tamateʻi ʻa e feituʻu ko ʻeni ne hoko aí?",
+  "confirm_delete_place_title": "Tamateʻi e Feituʻu ne Hoko Aí",
+  "delete": "Toʻo",
+  "edit": "Fakatonutonu",
+  "error": "Ne hoko ha fehalaaki. Kātaki ʻo toe feinga ʻanai ange.",
+  "event_date": "ʻAho ʻo e Polokalamá",
+  "event_place": "Feituʻu ne Hoko Aí",
+  "save": "Seivi",
+  "unable_to_save_date": "ʻIkai lava ke Seivi e ʻAho ne Hoko Aí. Kātaki ʻo toe feinga ʻamui ange. ",
+  "unable_to_save_place": "ʻIkai lava ke Seivi e Feituʻu ne Hoko Aí.  Kātaki ʻo toe feinga ʻamui ange. "
+}

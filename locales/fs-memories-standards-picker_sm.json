@@ -1,0 +1,19 @@
+{
+  "add": "Faaopoopo",
+  "add_event_data": "Faaopoopo Faamatalaga o le Mea na Tupu",
+  "add_event_date": "Faaopoopo le Aso o le Mea Na Tupu",
+  "add_event_place": "Faaopoopo le Nofoaga o le Mea Na Tupu",
+  "cancel": "Faaleaoga ",
+  "confirm_delete_date_text": "Ua mautinoa ua e manao e tapeese le aso lea o le mea na tupu?",
+  "confirm_delete_date_title": "E Tapeese Le Aso o le Mea Na Tupu?",
+  "confirm_delete_place_text": "Ua mautinoa ua e manao e tapeese le nofoaga o lea mea na tupu?",
+  "confirm_delete_place_title": "E Tapeese le Nofoaga o le Mea Na Tupu?",
+  "delete": "Tapēese",
+  "edit": "Faasa’o",
+  "error": "Ua i ai se mea sese na tupu. Faamolemole toe taumafai mai i se isi taimi.",
+  "event_date": "Aso o Mea Na Tupu",
+  "event_place": "Nofoaga o Mea Na Tupu",
+  "save": "Sefe ",
+  "unable_to_save_date": "Ua le Mafai ona Sefeina le Aso o le Mea na Tupu. Faamolemole toe taumafai mai i se isi taimi.",
+  "unable_to_save_place": "Ua le Mafai ona Sefeina le Nofoaga o le Mea na Tupu. Faamolemole toe taumafai mai i se isi taimi."
+}
