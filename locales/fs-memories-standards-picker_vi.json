@@ -1,0 +1,19 @@
+{
+  "add": "Thêm Vào",
+  "add_event_data": "Thêm Dữ Liệu của Sự Kiện",
+  "add_event_date": "Thêm Ngày của Sự Kiện",
+  "add_event_place": "Thêm Địa Điểm của Sự Kiện",
+  "cancel": "Hủy",
+  "confirm_delete_date_text": "Bạn có chắc chắn là muốn xóa ngày của sự kiện này không?",
+  "confirm_delete_date_title": "Xóa Ngày của Sự Kiện?",
+  "confirm_delete_place_text": "Bạn có chắc chắn là muốn xóa địa điểm của sự kiện này không?",
+  "confirm_delete_place_title": "Xóa Địa Điểm của Sự Kiện?",
+  "delete": "Xóa Bỏ",
+  "edit": "Hiệu Chỉnh",
+  "error": "Đã xảy ra lỗi. Vui lòng thử lại sau.",
+  "event_date": "Ngày Sự Kiện",
+  "event_place": "Địa Điểm Sự Kiện",
+  "save": "Lưu",
+  "unable_to_save_date": "Không thể Lưu Ngày của Sự Kiện Vui lòng thử lại sau.",
+  "unable_to_save_place": "Không thể Lưu Địa Điểm của Sự Kiện Vui lòng thử lại sau."
+}
