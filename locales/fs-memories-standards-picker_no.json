@@ -1,0 +1,19 @@
+{
+  "add": "Legg til",
+  "add_event_data": "Legg til hendelsesdata",
+  "add_event_date": "Legg til dato for hendelsen",
+  "add_event_place": "Legg til sted for hendelsen",
+  "cancel": "Avbryt",
+  "confirm_delete_date_text": "Er du sikker på at du vil slette denne hendelsesdatoen?",
+  "confirm_delete_date_title": "Vil du slette datoen for hendelsen?",
+  "confirm_delete_place_text": "Er du sikker på at du vil slette dette hendelsesstedet?",
+  "confirm_delete_place_title": "Vil du slette stedet for hendelsen?",
+  "delete": "Slett",
+  "edit": "Rediger",
+  "error": "Det oppsto en feil. Prøv igjen senere.",
+  "event_date": "Dato for hendelsen",
+  "event_place": "Sted for hendelsen",
+  "save": "Lagre",
+  "unable_to_save_date": "Kan ikke lagre datoen for hendelsen. Prøv igjen senere.",
+  "unable_to_save_place": "Kan ikke lagre stedet for hendelsen. Prøv igjen senere."
+}
