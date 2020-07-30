@@ -1,0 +1,19 @@
+{
+  "add": "Vakacuruma",
+  "add_event_data": "Kuria na iTukutuku ni Veika a Yaco",
+  "add_event_date": "Kuria na Tikinisiga ni Veika a Yaco",
+  "add_event_place": "Kuria na Vanua ni Veika a Yaco",
+  "cancel": "Bokoca",
+  "confirm_delete_date_text": "O vinakata dina mo bokoca na vakacurumi ni tikinisiga ni veika a yaco oqo?",
+  "confirm_delete_date_title": "Bokoca na Tikinisiga ni Veika a Yaco",
+  "confirm_delete_place_text": "O vinakata dina mo bokoca na vakacurumi ni vanua ni Veika a yaco oqo?",
+  "confirm_delete_place_title": "Bokoca na Vanua ni Veika a Yaco",
+  "delete": "Bokoca",
+  "edit": "Veisautaka",
+  "error": "Sa dua na cala. Kerei mo qai tovolea tale vakamalua.",
+  "event_date": "Tikinisiga ni Veika a Yaco",
+  "event_place": "Vanua ni Veika a Yaco",
+  "save": "Maroroya",
+  "unable_to_save_date": "Sega ni Maroroi rawa na tikinisiga ni Veika a Yaco. Kerei mo qai tovolea tale vakamalua.",
+  "unable_to_save_place": "Sega ni Maroroi rawa na Vanua ni Veika a Yaco. Kerei mo qai tovolea tale vakamalua."
+}
